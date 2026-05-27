@@ -547,6 +547,10 @@ body.menu-open { overflow: hidden; }
   object-fit: cover;
   display: block;
   filter: saturate(0.95) contrast(1.02);
+  transition: transform 0.5s ease;
+}
+.about__photo-frame:hover img {
+  transform: scale(1.05);
 }
 .about__caption {
   display: flex;
