@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Eugene Catolico Libalib - CV</title>
+<link rel="stylesheet" href="fonts_embedded.css">
+<style>
+  :root{
+    --dark:#16171B;
+    --navy:#163753;
+    --body-bg:#d9d9d9;
+    --text:#2b2b2e;
+    --muted:#3c3c3c;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  @page{ size:A4; margin:0; }
+
+  html,body{
+    width:210mm;
+    background:var(--body-bg);
+    font-family:'Poppins', sans-serif;
+    color:var(--text);
+  }
+
+  .page{ width:210mm; min-height:297mm; background:var(--body-bg); position:relative; }
+
+  /* Header */
+  .header{
+    background:var(--dark);
+    padding:5.5mm 12mm 4mm 12mm;
+    display:flex;
+    align-items:center;
+    gap:7mm;
+  }
+  .portrait{
+    width:23mm; height:23mm; border-radius:50%;
+    object-fit:cover; border:1.8mm solid #fff;
+    flex-shrink:0;
+  }
+  .header-text h1{
+    font-family:'Anton', sans-serif;
+    color:#fff;
+    font-size:25pt;
+    letter-spacing:1px;
+    line-height:1;
+  }
+  .header-text .subtitle{
+    font-family:'Poppins', sans-serif;
+    font-style:italic;
+    font-weight:600;
+    color:#fff;
+    font-size:9.3pt;
+    letter-spacing:0.5px;
+    margin-top:1.8mm;
+  }
+
+  /* Contact bar */
+  .contact-bar{
+    display:flex;
+    justify-content:space-between;
+    padding:2.5mm 12mm;
+    flex-wrap:wrap;
+    row-gap:1.6mm;
+  }
+  .contact-col{ display:flex; flex-direction:column; gap:1.8mm; }
+  .contact-item{
+    display:flex; align-items:center; gap:2.8mm;
+    font-size:9.5pt; font-weight:500; color:var(--text);
+  }
+  .contact-item svg{ width:5mm; height:5mm; flex-shrink:0; }
+  .badge{
+    width:5mm; height:5mm; background:var(--navy); border-radius:1mm;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:800; font-size:6.5pt; font-family:'Poppins',sans-serif;
+    flex-shrink:0;
+  }
+
+  /* Sections */
+  .content{ padding:0 12mm; }
+  .summary p{
+    font-style:italic; font-size:8.8pt; line-height:1.15; color:var(--text);
+    margin-bottom:0.7mm;
+  }
+  .divider{ border:none; border-top:0.8mm solid var(--navy); margin:1.2mm 12mm; }
+
+  h2.section-title{
+    font-family:'Poppins', sans-serif;
+    font-weight:800;
+    font-size:12pt;
+    letter-spacing:0.5px;
+    color:var(--dark);
+    margin-bottom:0.9mm;
+  }
+
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    column-gap:6mm;
+  }
+  .skills-grid ul{ list-style:none; }
+  .skills-grid li{
+    font-style:italic; font-size:9.1pt; font-weight:500;
+    color:var(--text); line-height:1.45;
+  }
+
+  .job{ margin-bottom:0.4mm; }
+  .job-header{
+    display:flex; align-items:baseline; gap:2.5mm;
+  }
+  .job-header .bullet{ font-size:9pt; color:var(--dark); }
+  .job-title{
+    font-family:'Anton', sans-serif;
+    font-size:11.5pt; letter-spacing:0.4px; color:var(--dark);
+    flex:1;
+  }
+  .job-date{
+    font-family:'Anton', sans-serif;
+    font-size:10.5pt; color:var(--dark); white-space:nowrap;
+  }
+  .job-role{
+    font-size:9.1pt; font-weight:500; color:var(--muted);
+    margin:0.3mm 0 0.6mm 5.3mm;
+  }
+  .job-desc{
+    font-style:italic; font-size:8.7pt; line-height:1.15; color:var(--text);
+    margin-left:5.3mm;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <img class="portrait" src="portrait.png" alt="Eugene Libalib">
+    <div class="header-text">
+      <h1>EUGENE CATOLICO LIBALIB</h1>
+      <p class="subtitle">TECHNICAL SUPPORT &amp; QUALITY SPECIALIST | AI-ASSISTED TROUBLESHOOTING</p>
+    </div>
+  </div>
+
+  <div class="contact-bar">
+    <div class="contact-col">
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" fill="var(--navy)"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.5 21 3 13.5 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1L6.6 10.8z"/></svg>
+        +639266887010
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" fill="var(--navy)"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7 8.4-6H3.6L12 12zM3 8.4V18h18V8.4l-8.4 6.3a1 1 0 0 1-1.2 0L3 8.4z"/></svg>
+        libeugca@gmail.com
+      </div>
+    </div>
+    <div class="contact-col">
+      <div class="contact-item">
+        <span class="badge">in</span>
+        www.linkedin.com/in/genelibalib
+      </div>
+      <div class="contact-item">
+        <svg viewBox="0 0 24 24" fill="var(--navy)"><path d="M12 2c-4.4 0-8 3.6-8 8 0 5.4 7 11.5 7.3 11.8.2.1.4.2.7.2s.5-.1.7-.2C13 21.5 20 15.4 20 10c0-4.4-3.6-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+        Lucena City
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="summary">
+      <p>I'm a technical support and network operations specialist with hands-on experience evaluating support quality, diagnosing hardware and connectivity issues, and building AI-powered support tooling. At Dell, I delivered technical support across hundreds of customer interactions while consistently exceeding CSAT targets and maintaining strong AHT, FCR, and quality scores, documenting case histories and managing clean escalation handoffs throughout. As a NOC Engineer, I triaged alerts, performed root-cause analysis on connectivity and latency issues, and managed full ticket lifecycles against SLA targets, working routers, switches, and firewalls daily.</p>
+      <p>More recently, I've applied that same troubleshooting and quality mindset to AI: integrating the Anthropic Claude API into live client-facing workflows to power AI-driven response agents, then refining their accuracy and reliability based on real interaction outcomes. Backed by hands-on hardware experience as an On-Call Technician (custom builds, component-level troubleshooting, system installs) and Kaseya certifications in Autotask PSA and Datto RMM, I bring a rare combination of support-quality rigor, network/hardware troubleshooting depth, and direct AI-tooling experience, translating technical findings into clear, actionable documentation for teams and end users alike.</p>
+    </div>
+
+    <hr class="divider">
+
+    <h2 class="section-title">TECHNICAL SKILLS</h2>
+    <div class="skills-grid">
+      <ul>
+        <li>Claude AI Integration</li>
+        <li>CRM Administration</li>
+        <li>Workflow Automation</li>
+        <li>Git &amp; Version Control</li>
+      </ul>
+      <ul>
+        <li>Responsive Design &amp; CSS Theming</li>
+        <li>GoHighLevel Specialist</li>
+        <li>Technical Hardware Troubleshooting</li>
+        <li>Network Monitoring</li>
+        <li>SEO &amp; Open Graph Meta Tags</li>
+      </ul>
+      <ul>
+        <li>HTML, CSS, JavaScript</li>
+        <li>Adobe Photoshop</li>
+        <li>Microsoft 365 Suite</li>
+        <li>Domain &amp; DNS Setup</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <h2 class="section-title">WORK EXPERIENCE</h2>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="bullet">○</span>
+        <span class="job-title">DELL COMPUTERS US &amp; UK BASED</span>
+        <span class="job-date">2017-2019</span>
+      </div>
+      <div class="job-role">Technical Support | Customer Support Representative</div>
+      <p class="job-desc">As a Dell Technical Support Representative, I resolved complex software and hardware issues across inbound and outbound customer interactions, consistently exceeding quality benchmarks — CSAT, AHT, FCR, and internal quality scores. I documented detailed case histories for every interaction, reviewed my own calls against quality standards to catch and correct recurring gaps, and ensured clean, well-documented escalation handoffs to Tier 2 support. This close attention to interaction quality and documentation turned frustrated customers into loyal Dell advocates.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="bullet">○</span>
+        <span class="job-title">GUAVATEK CANADA | ECOMMERCE &amp; CAMPAIGN</span>
+        <span class="job-date">2019-2021</span>
+      </div>
+      <div class="job-role">Junior Web Developer</div>
+      <p class="job-desc">As a Junior Web Developer, I built and maintained responsive front-end experiences for e-commerce stores and campaign websites using HTML, CSS, and JavaScript. I translated designs into clean, cross-browser code, configured website settings end-to-end, and handled domain setup, DNS records, and ongoing maintenance. I optimized page performance, ensured mobile responsiveness, and delivered pixel-accurate builds that supported marketing launches and drove user engagement across live campaigns.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="bullet">○</span>
+        <span class="job-title">ZERO | HARDWARE SPECIALIST - WINDOWS OS</span>
+        <span class="job-date">2020-PRESENT</span>
+      </div>
+      <div class="job-role">On Call Technician</div>
+      <p class="job-desc">I built and repaired desktops and laptops, delivering custom rig configurations tailored to each client's needs—from everyday productivity setups to high-performance gaming and workstation builds. I diagnosed and resolved hardware and software issues through hands-on troubleshooting, performed component upgrades, and handled full system installations. I stayed current on the latest computer trends, parts, and product releases to recommend cost-effective, future-ready solutions.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="bullet">○</span>
+        <span class="job-title">CARABAO CLOUDS SOLUTIONS</span>
+        <span class="job-date">2023-2024</span>
+      </div>
+      <div class="job-role">NOC - Network Operations Center Engineer</div>
+      <p class="job-desc">I monitored enterprise network infrastructure 24/7, triaging alerts and diagnosing connectivity, latency, and Wi-Fi/routing issues across routers, switches, and firewalls. For every incident, I documented a clear root-cause analysis and escalation path, then reviewed recurring issue patterns to flag process and knowledge gaps to Tier 2/3 teams. Managing tickets end-to-end against SLA targets, I helped turn individual incident reviews into repeatable troubleshooting workflows, contributing to a stable, high-availability network environment.</p>
+    </div>
+
+    <div class="job">
+      <div class="job-header">
+        <span class="bullet">○</span>
+        <span class="job-title">ARISECRM | MYBLUECREW | BRILLHERNANDEZMEDIA</span>
+        <span class="job-date">2024-2026</span>
+      </div>
+      <div class="job-role">Executive Assistant | AI Automation Specialist | GoHighLevel Specialist</div>
+      <p class="job-desc">I architect end-to-end CRM and marketing automation solutions across multi-client sub-accounts. I build high-converting funnels, custom HTML landing pages, and dynamic forms, paired with advanced workflows—missed call text-back, multi-step SMS sequences, and pipeline triggers. I handle A2P 10DLC, TCPA, and CAN-SPAM compliance, integrate Node.js middleware and AI-powered call agents, and deliver scalable automations that drive measurable lead conversion for clients.</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
