@@ -2,6 +2,14 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-09-19 · Site copy and CV alignment
+
+Deploys from `main` via GitHub Pages: https://governorgene.github.io/eugene-libalib-portfolio/ . The CV linked from the site is a separate copy at `assets/Eugene_Libalib_CV.pdf`, so it must be replaced whenever `CV/Eugene_Libalib_CV.pdf` is re-exported.
+
+- [x] Aligned the site copy with the corrected CV. The Claude wording now describes GoHighLevel voice agents on Claude models and the Claude Code setup. The Brill Hernandez Media start year is now 2025. Em dashes are replaced with plain punctuation. Commit e42dbba; the Pages build shows `built`; the live page returns HTTP 200 with 0 em dashes and 0 en dashes.
+- [x] Replaced the downloadable CV. The live `assets/Eugene_Libalib_CV.pdf` returns HTTP 200, and its SHA256 `6e20c40c…8a50` matches `CV/Eugene_Libalib_CV.pdf`.
+- [x] Checked rendering in headless Chrome at 1440px and 375px: no console errors and no sideways scroll. The 375px `scrollWidth` of 430 comes from the off-canvas menu and was the same before this change.
+
 ## Plan
 
 ### Structure
