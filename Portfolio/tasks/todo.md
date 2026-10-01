@@ -2,6 +2,17 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-10-01 · Case studies section
+
+Added for the Aspire Media Marketing (Media Manager) application, which asked for a walkthrough of a campaign, a landing page, and a CRM, or an updated portfolio.
+
+- [x] New `#case-studies` section between Expertise and Experience, with three cases: 01 the Missed Call pipeline turnaround (links to the 3-minute Drive walkthrough), 02 custom HTML websites and landing pages, 03 SMS and email follow-up campaigns. All copy uses facts already in the CV, the site, or the August video; no metrics are invented.
+- [x] Renumbered sections to `0X / 05`, and added Case Studies to the quick-nav (5 cards: 3 + 2 rows under 1080px, 2 + 2 + 1 under 720px, one column under 440px) and to the menu drawer (now 01 to 06). The menu tracker and scroll reveal both cover the new section.
+- [x] Checked in headless Chrome at 1440, 1000, 700 and 375px: no console errors, no quick-nav label overflow, and the nav counter and menu both mark Case Studies while it is in view. The 375px `scrollWidth` of 423 comes from the off-canvas menu and is the same on the previous commit. 0 em dashes and 0 en dashes.
+- [ ] Needs from Gene, marked by `TODO(Gene)` comments in `index.html`: blurred screenshots for cases 02 and 03 (drop in `assets/` and add an `<img>` inside `.case__media`), before/after numbers for the 78 Missed Call opportunities, campaign stats, and which client names may be shown.
+- [ ] Confirm the Drive video is shared as "Anyone with the link".
+- [ ] Merge to `main` so GitHub Pages publishes it.
+
 ## 2026-09-19 · Site copy and CV alignment
 
 Deploys from `main` via GitHub Pages: https://governorgene.github.io/eugene-libalib-portfolio/ . The CV linked from the site is a separate copy at `assets/Eugene_Libalib_CV.pdf`, so it must be replaced whenever `CV/Eugene_Libalib_CV.pdf` is re-exported.

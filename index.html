@@ -30,7 +30,7 @@
     <a href="#top" class="nav__brand" aria-label="Home">
       <img src="assets/ECL Logo.png" alt="" class="nav__mark" aria-hidden="true" />    </a>
     <div class="nav__counter" aria-hidden="true">
-      <span id="nav-counter">01</span> / 04
+      <span id="nav-counter">01</span> / 05
     </div>
     <button class="nav__menu" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay">
       <span></span><span></span><span></span>
@@ -68,13 +68,18 @@
         <span class="menu__label">Expertise</span>
         <span class="menu__dot" aria-hidden="true"></span>
       </a>
-      <a href="#work" class="menu__link" data-menu-link data-section="work">
+      <a href="#case-studies" class="menu__link" data-menu-link data-section="cases">
         <span class="menu__num">04</span>
+        <span class="menu__label">Case Studies</span>
+        <span class="menu__dot" aria-hidden="true"></span>
+      </a>
+      <a href="#work" class="menu__link" data-menu-link data-section="work">
+        <span class="menu__num">05</span>
         <span class="menu__label">Experience</span>
         <span class="menu__dot" aria-hidden="true"></span>
       </a>
       <a href="#contact" class="menu__link" data-menu-link data-section="contact">
-        <span class="menu__num">05</span>
+        <span class="menu__num">06</span>
         <span class="menu__label">Contact</span>
         <span class="menu__dot" aria-hidden="true"></span>
       </a>
@@ -136,13 +141,18 @@
           <span class="quicknav__divider" aria-hidden="true"></span>
           <span class="quicknav__label">Expertise</span>
         </a>
-        <a href="#work" class="quicknav__card">
+        <a href="#case-studies" class="quicknav__card">
           <span class="quicknav__num">03</span>
+          <span class="quicknav__divider" aria-hidden="true"></span>
+          <span class="quicknav__label">Case Studies</span>
+        </a>
+        <a href="#work" class="quicknav__card">
+          <span class="quicknav__num">04</span>
           <span class="quicknav__divider" aria-hidden="true"></span>
           <span class="quicknav__label">Experience</span>
         </a>
         <a href="#contact" class="quicknav__card">
-          <span class="quicknav__num">04</span>
+          <span class="quicknav__num">05</span>
           <span class="quicknav__divider" aria-hidden="true"></span>
           <span class="quicknav__label">Contact</span>
         </a>
@@ -152,7 +162,7 @@
     <!-- 01 / ABOUT -->
     <section id="about" class="section" data-counter="01">
       <header class="section__head">
-        <p class="eyebrow">01 / 04 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">01 / 05 <span class="slashes">/////////</span></p>
         <p class="section__kicker">* WHO I AM</p>
         <h2 class="section__title">ABOUT</h2>
       </header>
@@ -187,7 +197,7 @@
     <!-- 02 / EXPERTISE -->
     <section id="expertise" class="section" data-counter="02">
       <header class="section__head">
-        <p class="eyebrow">02 / 04 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">02 / 05 <span class="slashes">/////////</span></p>
         <p class="section__kicker">* FIVE DISCIPLINES</p>
         <h2 class="section__title">EXPERTISE</h2>
         <p class="section__lede">One operator, five complementary disciplines, built from a decade of hands-on work in support, dev, and automation.</p>
@@ -276,10 +286,113 @@
       </div>
     </section>
 
-    <!-- 03 / EXPERIENCE -->
-    <section id="work" class="section" data-counter="03">
+    <!-- 03 / CASE STUDIES -->
+    <section id="case-studies" class="section" data-counter="03">
       <header class="section__head">
-        <p class="eyebrow">03 / 04 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">03 / 05 <span class="slashes">/////////</span></p>
+        <p class="section__kicker">* PROOF OF WORK</p>
+        <h2 class="section__title">CASE STUDIES</h2>
+        <p class="section__lede">Work from live client accounts: a CRM rebuild, custom landing pages, and follow-up campaigns. Client names and contact data are kept private.</p>
+      </header>
+
+      <div class="case-list">
+        <article class="case" id="case-crm">
+          <a class="case__media case__media--video" href="https://drive.google.com/file/d/1J-WjdXMfaGFFnre1aTD3sYOo-Oqdjawp/view?usp=drive_link" target="_blank" rel="noopener" aria-label="Watch the 3-minute CRM walkthrough (opens Google Drive)">
+            <span class="case__media-label" aria-hidden="true">CRM · PIPELINE REBUILD</span>
+            <span class="case__play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+            <span class="case__media-label case__media-label--end" aria-hidden="true">WATCH · 3 MIN</span>
+          </a>
+          <div class="case__body">
+            <p class="case__meta">Case 01 &nbsp;·&nbsp; CRM &nbsp;·&nbsp; GoHighLevel</p>
+            <h3 class="case__title">Missed Call pipeline turnaround</h3>
+            <p class="case__client">Home-services client</p>
+            <dl class="case__points">
+              <div>
+                <dt>The problem</dt>
+                <dd>78 opportunities were sitting in the "Missed Call" stage of the client's GoHighLevel pipeline, stalled instead of moving forward.</dd>
+              </div>
+              <div>
+                <dt>What I did</dt>
+                <dd>Traced why leads were getting stuck in that stage and rebuilt the automation around it. The 3-minute walkthrough shows why the stage was stuck and what I rebuilt to fix it.</dd>
+              </div>
+              <!-- TODO(Gene): add a "Result" row with before/after numbers for the 78 opportunities. -->
+            </dl>
+            <div class="project__tags">
+              <span class="tag">GHL / CRM</span>
+              <span class="tag">Pipelines</span>
+              <span class="tag">Workflows</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case" id="case-landing">
+          <!-- TODO(Gene): drop a blurred screenshot in assets/ and add <img src="assets/..." alt="..." /> inside this div. -->
+          <div class="case__media" aria-hidden="true">
+            <span class="case__media-label">LANDING PAGES · CUSTOM HTML</span>
+            <span class="case__media-mark">&lt;/&gt;</span>
+            <span class="case__media-label case__media-label--end">BUILT IN GOHIGHLEVEL</span>
+          </div>
+          <div class="case__body">
+            <p class="case__meta">Case 02 &nbsp;·&nbsp; Web Dev &nbsp;·&nbsp; GoHighLevel</p>
+            <h3 class="case__title">Custom HTML websites and landing pages</h3>
+            <p class="case__client">Agency client sub-accounts</p>
+            <dl class="case__points">
+              <div>
+                <dt>The approach</dt>
+                <dd>Instead of stock funnel templates, I hand-write the HTML, CSS and JavaScript so each page matches the client's brand, then build it into GoHighLevel so forms and workflows stay connected.</dd>
+              </div>
+              <div>
+                <dt>How it ships</dt>
+                <dd>Every page is mobile-first and goes through a pre-deploy audit for forms, performance and accessibility before it goes live. I design the graphics that ship with it in Photoshop.</dd>
+              </div>
+              <!-- TODO(Gene): add a "Result" row and a live link once a client page can be shown. -->
+            </dl>
+            <div class="project__tags">
+              <span class="tag">Web Dev</span>
+              <span class="tag">Landing Pages</span>
+              <span class="tag">HTML / CSS / JS</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case" id="case-campaigns">
+          <!-- TODO(Gene): drop a blurred workflow or campaign-stats screenshot in assets/ and add an <img> inside this div. -->
+          <div class="case__media" aria-hidden="true">
+            <span class="case__media-label">CAMPAIGNS · SMS + EMAIL</span>
+            <span class="case__media-mark">A2P</span>
+            <span class="case__media-label case__media-label--end">10DLC · TCPA · CAN-SPAM</span>
+          </div>
+          <div class="case__body">
+            <p class="case__meta">Case 03 &nbsp;·&nbsp; Growth &nbsp;·&nbsp; Compliance</p>
+            <h3 class="case__title">SMS and email follow-up campaigns</h3>
+            <p class="case__client">Agency client sub-accounts</p>
+            <dl class="case__points">
+              <div>
+                <dt>What I run</dt>
+                <dd>Multi-step SMS sequences, email campaigns, missed-call text-back and reactivation flows, built as GoHighLevel workflows across client sub-accounts.</dd>
+              </div>
+              <div>
+                <dt>Kept deliverable</dt>
+                <dd>I handle A2P 10DLC, TCPA and CAN-SPAM compliance end to end, so messages keep landing, and client-facing reporting shows each account what its campaigns produce.</dd>
+              </div>
+              <!-- TODO(Gene): add a "Result" row with campaign stats (reply rate, booked calls, reactivated leads). -->
+            </dl>
+            <div class="project__tags">
+              <span class="tag">Growth</span>
+              <span class="tag">SMS / Email</span>
+              <span class="tag">Compliance</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 04 / EXPERIENCE -->
+    <section id="work" class="section" data-counter="04">
+      <header class="section__head">
+        <p class="eyebrow">04 / 05 <span class="slashes">/////////</span></p>
         <p class="section__kicker">* BUILT TO SHIP</p>
         <h2 class="section__title">SELECTED EXPERIENCE</h2>
         <p class="section__lede">Filter by discipline.</p>
@@ -362,10 +475,10 @@
       </div>
     </section>
 
-    <!-- 04 / CONTACT -->
-    <section id="contact" class="section section--contact" data-counter="04">
+    <!-- 05 / CONTACT -->
+    <section id="contact" class="section section--contact" data-counter="05">
       <header class="section__head section__head--centered">
-        <p class="eyebrow">04 / 04 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">05 / 05 <span class="slashes">/////////</span></p>
         <p class="section__kicker">* TRANSMISSION</p>
         <h2 class="section__title">LET'S BUILD</h2>
         <p class="section__lede">

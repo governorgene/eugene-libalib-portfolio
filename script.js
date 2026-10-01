@@ -59,7 +59,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 // ===== Scroll reveal =====
 (function initScrollReveal() {
-  const targets = document.querySelectorAll('.card, .project, .section__title, .about p, .badge');
+  const targets = document.querySelectorAll('.card, .project, .case, .section__title, .about p, .badge');
   targets.forEach((el) => el.classList.add('reveal'));
 
   if (!('IntersectionObserver' in window)) {
@@ -163,6 +163,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     home: document.getElementById('top'),
     about: document.getElementById('about'),
     expertise: document.getElementById('expertise'),
+    cases: document.getElementById('case-studies'),
     work: document.getElementById('work'),
     contact: document.getElementById('contact'),
   };
