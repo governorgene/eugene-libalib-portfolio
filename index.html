@@ -292,7 +292,7 @@
         <p class="eyebrow">03 / 05 <span class="slashes">/////////</span></p>
         <p class="section__kicker">* PROOF OF WORK</p>
         <h2 class="section__title">CASE STUDIES</h2>
-        <p class="section__lede">Work from live client accounts: a CRM rebuild, custom landing pages, and follow-up campaigns. Client names and contact data are kept private.</p>
+        <p class="section__lede">Work from live client accounts: a CRM rebuild, custom landing pages, follow-up campaigns, and an AI phone receptionist. Client names and contact data are kept private.</p>
       </header>
 
       <div class="case-list">
@@ -383,6 +383,44 @@
               <span class="tag">Growth</span>
               <span class="tag">SMS / Email</span>
               <span class="tag">Compliance</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="case" id="case-receptionist">
+          <!-- TODO(Gene): drop a blurred screenshot of the agent config or call flow in assets/ and add an <img> inside this div. -->
+          <div class="case__media" aria-hidden="true">
+            <span class="case__media-label">AI RECEPTIONIST · VOICE AGENT</span>
+            <span class="case__media-mark">AI</span>
+            <span class="case__media-label case__media-label--end">ENGLISH + SPANISH</span>
+          </div>
+          <div class="case__body">
+            <p class="case__meta">Case 04 &nbsp;·&nbsp; AI &nbsp;·&nbsp; GoHighLevel</p>
+            <h3 class="case__title">Bilingual AI phone receptionist</h3>
+            <p class="case__client">Windows and doors company</p>
+            <dl class="case__points">
+              <div>
+                <dt>The problem</dt>
+                <dd>Service bookings from the client's AI receptionist had to be keyed into Workiz, their dispatch system, by hand, and jobs booked in Workiz didn't block the AI's calendar. No one on the team could take a call in Spanish.</dd>
+              </div>
+              <div>
+                <dt>What I built</dt>
+                <dd>I took over the client's GoHighLevel Voice AI receptionist, rebuilt it, and added a Spanish-language agent it hands live calls to. Around it I built 8 post-call workflows, including the Workiz and ServiceM8 syncs, plus a Cloudflare Worker that checks the Service calendar against Workiz every 5 minutes.</dd>
+              </div>
+              <div>
+                <dt>How it works</dt>
+                <dd>The agent is built to gather every booking detail, gate code included, before it checks availability, then book the right calendar: Service for repairs, Sales for new installs. After each call, 9 extraction actions write whatever the caller gave, from contact details to a call summary, to the CRM.</dd>
+              </div>
+              <div>
+                <dt>Result</dt>
+                <dd>The rebuilt agent went live in July 2026. From July 3 to October 1 it answered 288 calls, a handful of them internal tests, and transferred 104 live to one of five departments. From July through September it booked 49 appointments directly onto the Service and Sales calendars.</dd>
+              </div>
+            </dl>
+            <div class="project__tags">
+              <span class="tag">AI</span>
+              <span class="tag">Voice Agent</span>
+              <span class="tag">Workiz / ServiceM8</span>
+              <span class="tag">Cloudflare Worker</span>
             </div>
           </div>
         </article>

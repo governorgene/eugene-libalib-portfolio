@@ -2,6 +2,14 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-10-02 · Case 04: bilingual AI phone receptionist
+
+- [x] Added `#case-receptionist`: the Voice AI receptionist rebuilt for a windows and doors client, kept anonymous (no client or persona name, per Gene). Facts come from the client's project repo, the live GoHighLevel account (read-only), and Teams/Outlook, then checked against primary sources by a separate fact pass and a confidentiality pass.
+- [x] Wording follows what the sources support: "took over ... rebuilt" (an earlier agent existed before March 2026); the platform is GoHighLevel Voice AI; booking-detail gathering is described as the design, not a guarantee; metrics are call-log counts (288 calls Jul 3 to Oct 1 incl. a few internal tests, 104 live transfers, 49 voice-booked appointments Jul to Sep). No before/after claims, because no pre-agent baseline exists.
+- [x] Section lede now lists the receptionist. Checked in headless Chrome at 1440, 1000, 700 and 375px: no console errors, no new overflow, 0 em or en dashes, no client name, persona name or phone number in the page.
+- [ ] Open question for Gene: the hero, About and AI cards (and the CV) say the voice agents run "on Anthropic's Claude models". No source supports that for this agent (only "GHL Voice AI"); Claude shows up as the build assistant. Confirm the model or soften the wording.
+- [ ] Optional: blurred screenshot of the agent config or call flow for the media panel.
+
 ## 2026-10-01 · Case studies section
 
 Added for the Aspire Media Marketing (Media Manager) application, which asked for a walkthrough of a campaign, a landing page, and a CRM, or an updated portfolio.
