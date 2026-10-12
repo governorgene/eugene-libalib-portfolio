@@ -2,6 +2,14 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-10-12 · Hero name no longer runs off phone screens
+
+- [x] Found while trialling Playwright CLI: `.hero__title` was `white-space: nowrap` with a 36px font-size floor, so "HI, I'M EUGENE LIBALIB" needed 410px and was cut off at "LIBA" on every width from 320 to 414px (iPhone SE through Pixel). Measured: `h1.scrollWidth` 410 vs `clientWidth` 335 at 375px, no animation running.
+- [x] Fix: the name sits in `<span class="hero__name">` with `nowrap`, and the title itself may wrap, so where the line does not fit it breaks once, before the name ("HI, I'M" / "EUGENE LIBALIB"). A `max-width: 340px` step drops the title to 2rem, because at 36px the name ran 2px into the gutter at 320px.
+- [x] Checked in headless Chrome (Playwright CLI) at 320, 340, 341, 360, 375, 414, 450, 480, 600, 768, 1024 and 1440px: name inside the gutter at every width, 2 lines up to 450px, 1 line from 480px. The same check flagged 320 to 414px as clipped on the old code. Page `scrollWidth` at 375px went from 430 to 375. No console errors.
+- [x] Wider layouts unchanged by eye: the h1 renders at the same size at 480, 600, 768, 1024 and 1440px. At 480, 768 and 1440 about 125 to 360 pixels around the "A" in LIBALIB differ by edge smoothing (the name is now its own text run). Two renders of the new code match pixel for pixel, so this is real but invisible at 2x zoom.
+- [ ] Owner's call, not changed: the role rotator includes "Network Operations Engineer", so the hero can read "I work as a Network Operations Engineer" while the CV title is Lead Automation Engineer.
+
 ## 2026-10-12 · Case 04 shipped, Claude-model claim softened
 
 - [x] Case 04 (`aab4e0a`) had been sitting unmerged on `claude/magical-albattani-oz9ckt`. Fast-forwarded into `main` at the owner's word, pushed, Pages build `built aab4e0a`, and the live page contains `id="case-receptionist"`. Both stray `claude/*` branches were then deleted from GitHub. Rollback SHAs: `aab4e0a` (magical-albattani), `b93645f` (wizardly-brahmagupta, already on `main`).
@@ -25,7 +33,7 @@ Added for the Aspire Media Marketing (Media Manager) application, which asked fo
 
 - [x] New `#case-studies` section between Expertise and Experience, with three cases: 01 the Missed Call pipeline turnaround (links to the 3-minute Drive walkthrough), 02 custom HTML websites and landing pages, 03 SMS and email follow-up campaigns. All copy uses facts already in the CV, the site, or the August video; no metrics are invented.
 - [x] Renumbered sections to `0X / 05`, and added Case Studies to the quick-nav (5 cards: 3 + 2 rows under 1080px, 2 + 2 + 1 under 720px, one column under 440px) and to the menu drawer (now 01 to 06). The menu tracker and scroll reveal both cover the new section.
-- [x] Checked in headless Chrome at 1440, 1000, 700 and 375px: no console errors, no quick-nav label overflow, and the nav counter and menu both mark Case Studies while it is in view. The 375px `scrollWidth` of 423 comes from the off-canvas menu and is the same on the previous commit. 0 em dashes and 0 en dashes.
+- [x] Checked in headless Chrome at 1440, 1000, 700 and 375px: no console errors, no quick-nav label overflow, and the nav counter and menu both mark Case Studies while it is in view. ~~The 375px `scrollWidth` of 423 comes from the off-canvas menu and is the same on the previous commit.~~ Corrected 2026-10-12: the overflow was the hero headline, which was cut off at every phone width. With the headline fixed, `scrollWidth` at 375px is 375. See the 2026-10-12 hero entry. 0 em dashes and 0 en dashes.
 - [ ] Needs from Gene, marked by `TODO(Gene)` comments in `index.html`: blurred screenshots for cases 02 and 03 (drop in `assets/` and add an `<img>` inside `.case__media`), before/after numbers for the 78 Missed Call opportunities, campaign stats, and which client names may be shown.
 - [ ] Confirm the Drive video is shared as "Anyone with the link".
 - [ ] Merge to `main` so GitHub Pages publishes it.

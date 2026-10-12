@@ -308,7 +308,13 @@ body.menu-open { overflow: hidden; }
   font-weight: 800;
   text-transform: uppercase;
   margin: 0 0 1.75rem;
-  white-space: nowrap;
+}
+/* The name never splits. Where the full line no longer fits (below ~450px, where the
+   font-size floor stops scaling), the title breaks once, before the name, instead of
+   running off the right edge of the screen. */
+.hero__name { white-space: nowrap; }
+@media (max-width: 340px) {
+  .hero__title { font-size: 2rem; } /* the 36px floor puts the name 2px into the gutter at 320px */
 }
 .hero__subtitle {
   font-size: clamp(1rem, 1.6vw, 1.2rem);
