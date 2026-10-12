@@ -2,6 +2,49 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-10-12 · Redesign parked on its branch, work resumes on `main`
+
+The owner asked to commit everything and start again from `main`. The redesign (Option A in `index.html` / `styles.css` / `script.js`, Option B as `editorial.*`, the three website-build clips and posters) is committed and pushed to `redesign/control-room`, NOT merged. The Plan items in the entry below are still unticked because none of them was verified here.
+
+- [x] Private files kept out of the public repo with a new root `.gitignore`: the compensation review, KPI draft, Brill response, job-application answers, employer-specific cover letters and `Prospecting/` (prospect contact data). They stay on disk only. The repo is public, so a pushed copy would be readable on GitHub even on a branch.
+- [x] `CV/portrait.png` showed as deleted, but `CV/Gene Catolico.png` had the same SHA256 (5f7e223f…). It was a rename, so it is renamed back and `CV/Eugene_Libalib_CV.html` loads its photo again.
+- [ ] Merge risk: `origin/main` got `b93645f` "Add case studies section" (2026-10-01, cloud session), which edits the same four files this branch rewrites. Merging the redesign into `main` later will conflict; the case-studies section has to be carried into the new markup by hand.
+
+## 2026-09-19 · Build Option A "Control Room" into the real site
+
+Owner chose Option A. Work happens on branch `redesign/control-room`; `main` (which deploys to GitHub Pages) is untouched until the owner says to ship. Git is the backup: `index.html`, `styles.css`, `script.js` were clean at 14d45b4 before the rewrite.
+
+Plan
+- [ ] Rewrite `index.html`, `styles.css`, `script.js` from the approved artboard: inline styles to token-driven classes, real asset paths, CV links restored, dynamic year, `<head>` meta preserved.
+- [ ] Responsive below 1440 (the artboard only covers desktop): fluid display type, rack 5 to 3+2 to 2 to 1 columns, stacked ledger, drawer nav under 900px.
+- [ ] Keep every behaviour of the current `script.js`: role rotator, experience filter, expertise module to filter, scroll reveal, menu drawer with focus handling.
+- [ ] New: videos play only in view, pause control per video (WCAG 2.2.2), reduced-motion respected, overscan crop hides the recorder overlay and scrollbar baked into the clips.
+- [ ] Gate: `site-check.js` PASS at 375 / 768 / 1440 (copy, links, head regressions, horizontal scroll, overflow, contrast, tap targets, console errors, filter counts, drawer, rotator, video play and pause), then a human-eyes pass on the tiles at all three widths.
+- [ ] Ship only on the owner's word: commit, merge to `main`, push, confirm the Pages build and the live URL.
+
+Added same day: the owner also wants Option B "Editorial" built as a real page. It lives beside A as `editorial.html` + `editorial.css` + `editorial.js` (new files, same `assets/`), so both can be compared live. It carries `noindex` and a canonical link to the main page so it does not compete with `index.html` in search. Promoting B later is a rename plus removing those two lines.
+- [ ] Build `editorial.*` from the approved Option B artboard; gate is `site-check-b.js` PASS at 375 / 768 / 1440 plus an eyes-on pass. In B the role "rotator" is the cyan highlight stepping down the visible five-role list.
+- [ ] OPEN, owner's call: on the canvas the ABOUT title of Option A was dragged out of its header (now `position: absolute; left: -751px; top: -60px`). Rendered, it is clipped at the left page edge (x = -19px) and overlaps the top of the portrait. Treated as accidental and NOT carried into the build unless the owner says it was deliberate.
+- [ ] Canvas limit learned: artboard frames cap at 8000px tall. A (8831) and B (10083) were clamped to 8000 in canvas view, so their contact sections are cut off there; Play mode scrolls the full page.
+
+Found while proving the checker on the OLD site (it must fail before it is trusted; it did, 9 static + 5 render failures):
+- ~~The 375px `scrollWidth` of 430 comes from the off-canvas menu~~ (claim in the entry below). Measured 2026-09-19: the hero `<h1>` overflows, 410px of text in a 335px box, and that is what widens the page. A real live mobile bug; the rewrite fixes it.
+- No `<img>` on the live site carries `width`/`height`, so every image causes layout shift.
+- `.card__open` arrow fails contrast (2.49:1).
+
+## 2026-09-19 · Two redesign samples on the design canvas (not built into the site yet)
+
+Design-only session. `index.html`, `styles.css` and `script.js` are untouched; `git status` after the session is identical to before it. The samples live on a private claude.ai design canvas: https://claude.ai/artifact/FJMhzFVdytvXN3n2dT2YoD
+
+- [x] Option A "Control Room" (dark, Archivo Expanded + JetBrains Mono, five-module expertise rack, solid cyan contact block). Artboard 1440x8831. Own checker run: PASS, 0 missing copy, 0 contrast / overflow / tap-target failures.
+- [x] Option B "Editorial" (light paper, Instrument Serif + Geist, ledger tables, cyan as highlighter only, one dark band for the videos). Artboard 1440x10083. Own checker run: PASS.
+- [x] New section 03 "Website Builds" in both, between Expertise and Experience, holding the three new clips (HyBar, Sanpete School of the Performing Arts, Brill Hernández Media). Counters became `NN / 05`. In-viewport capture confirmed all three videos at `readyState 4`, playing, painted.
+- [x] Copy fidelity is machine-checked: every string and href from `index.html` plus the five rotator roles from `script.js` must appear verbatim (case-insensitive). The checker was first watched failing on a deliberately broken page (clipping, overflow, contrast 1.88, 10px text, 20px target, missing alt, em dash, 120 missing strings).
+- [ ] NOT verified: the live canvas runtime. Hover, focus, the role rotator animation, the accent retint tweak and video autoplay were checked in a faithful local preview and from source, never seen running inside the canvas itself.
+- [ ] Owner decision: pick A, B, or a mix. Nothing gets built into the real site until then.
+- [ ] If either ships: restore `href="assets/Eugene_Libalib_CV.pdf"` with the `download` attribute on both DOWNLOAD CV links (the artboards use `#`), and add a pause control for the looping videos (WCAG 2.2.2).
+- [ ] Source clips carry recording artefacts: the screen recorder's mic/camera overlay bottom-right and the browser scrollbar at the right edge in all three, plus a mouse pointer mid-frame in the Sanpete clip. Option B hides the first two with a 16px / 10px overscan crop; Option A shows the clips uncropped. A clean re-export fixes it properly.
+
 ## 2026-09-19 · Site copy and CV alignment
 
 Deploys from `main` via GitHub Pages: https://governorgene.github.io/eugene-libalib-portfolio/ . The CV linked from the site is a separate copy at `assets/Eugene_Libalib_CV.pdf`, so it must be replaced whenever `CV/Eugene_Libalib_CV.pdf` is re-exported.

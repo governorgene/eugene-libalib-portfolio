@@ -23,391 +23,638 @@
 
   <link rel="icon" type="image/png" href="assets/ECL Logo.png" />
   <link rel="apple-touch-icon" href="assets/ECL Logo.png" />
+
+  <!-- Fonts: Archivo (wdth + wght axes) and JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="nav">
-    <a href="#top" class="nav__brand" aria-label="Home">
-      <img src="assets/ECL Logo.png" alt="" class="nav__mark" aria-hidden="true" />    </a>
-    <div class="nav__counter" aria-hidden="true">
-      <span id="nav-counter">01</span> / 04
-    </div>
-    <button class="nav__menu" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay">
-      <span></span><span></span><span></span>
-    </button>
-  </header>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- MENU OVERLAY -->
-  <div class="menu-backdrop" id="menu-backdrop" aria-hidden="true"></div>
-  <aside class="menu" id="menu-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navigation">
-    <div class="menu__header">
-      <a href="#top" class="nav__brand menu__brand" data-menu-link aria-label="Home">
-        <img src="assets/ECL Logo.png" alt="" class="nav__mark" aria-hidden="true" />
+  <!-- ICON SPRITE -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow" viewBox="0 0 20 20"><path d="M3 10h13M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
+    <symbol id="i-download" viewBox="0 0 20 20"><path d="M10 3v12M5 10l5 5 5-5M4 18h12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
+    <symbol id="i-close" viewBox="0 0 20 20"><path d="M4 4l12 12M16 4L4 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></symbol>
+    <symbol id="i-play" viewBox="0 0 14 14"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 14 14"><path d="M3 2h3v10H3zM8 2h3v10H8z" fill="currentColor"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3v9zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19v4.81h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.86 5.86 0 0 0-2.13 1.38A5.86 5.86 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.73 1.46 1.38 2.13a5.86 5.86 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.86 5.86 0 0 0 2.13-1.38 5.86 5.86 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.86 5.86 0 0 0-1.38-2.13A5.86 5.86 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24"><path fill="currentColor" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.14V9.4a6.84 6.84 0 0 0-1-.06A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.43a8.16 8.16 0 0 0 4.77 1.52V6.5a4.85 4.85 0 0 1-1.84-.27z"/></symbol>
+    <symbol id="i-email" viewBox="0 0 24 24"><path fill="currentColor" d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></symbol>
+  </svg>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__inner">
+      <a href="#top" class="nav__brand">
+        <span class="mark"><img src="assets/ECL Logo.png" alt="" width="32" height="32" class="mark__img" /></span>
         <span class="nav__brand-text">ECL</span>
       </a>
-      <button class="menu__close" id="menu-close" aria-label="Close menu">
-        <span></span><span></span>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#about" class="nav__link" data-spy="about">About</a>
+        <a href="#expertise" class="nav__link" data-spy="expertise">Expertise</a>
+        <a href="#websites" class="nav__link" data-spy="websites">Websites</a>
+        <a href="#work" class="nav__link" data-spy="work">Experience</a>
+        <a href="#contact" class="nav__link" data-spy="contact">Contact</a>
+      </nav>
+      <button type="button" class="nav__menu" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu-overlay">
+        <span class="nav__menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU DRAWER (below 900px) -->
+  <div class="menu-backdrop" id="menu-backdrop"></div>
+  <aside class="menu" id="menu-overlay" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+    <div class="menu__strip">
+      <a href="#top" class="nav__brand" data-menu-link>
+        <span class="mark"><img src="assets/ECL Logo.png" alt="" width="32" height="32" class="mark__img" /></span>
+        <span class="nav__brand-text">ECL</span>
+      </a>
+      <button type="button" class="menu__close" id="menu-close" aria-label="Close menu">
+        <svg class="icon" width="20" height="20" aria-hidden="true"><use href="#i-close"/></svg>
       </button>
     </div>
 
-    <p class="menu__section-label">NAVIGATE <span class="slashes">/</span> <span id="menu-counter">00</span></p>
+    <div class="menu__body">
+      <div class="menu__group">
+        <p class="menu__label"><span class="menu__label-mark" aria-hidden="true">//</span> NAVIGATE <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span></p>
+        <nav class="menu__nav" aria-label="Sections">
+          <a href="#about" class="menu__link" data-menu-link data-spy="about">
+            <span class="menu__num">01</span>
+            <span class="menu__text">About</span>
+            <svg class="icon menu__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a href="#expertise" class="menu__link" data-menu-link data-spy="expertise">
+            <span class="menu__num">02</span>
+            <span class="menu__text">Expertise</span>
+            <svg class="icon menu__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a href="#websites" class="menu__link" data-menu-link data-spy="websites">
+            <span class="menu__num">03</span>
+            <span class="menu__text">Websites</span>
+            <svg class="icon menu__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a href="#work" class="menu__link" data-menu-link data-spy="work">
+            <span class="menu__num">04</span>
+            <span class="menu__text">Experience</span>
+            <svg class="icon menu__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a href="#contact" class="menu__link" data-menu-link data-spy="contact">
+            <span class="menu__num">05</span>
+            <span class="menu__text">Contact</span>
+            <svg class="icon menu__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </nav>
+      </div>
 
-    <nav class="menu__nav" aria-label="Primary">
-      <a href="#top" class="menu__link" data-menu-link data-section="home">
-        <span class="menu__num">01</span>
-        <span class="menu__label">Home</span>
-        <span class="menu__dot" aria-hidden="true"></span>
-      </a>
-      <a href="#about" class="menu__link" data-menu-link data-section="about">
-        <span class="menu__num">02</span>
-        <span class="menu__label">About</span>
-        <span class="menu__dot" aria-hidden="true"></span>
-      </a>
-      <a href="#expertise" class="menu__link" data-menu-link data-section="expertise">
-        <span class="menu__num">03</span>
-        <span class="menu__label">Expertise</span>
-        <span class="menu__dot" aria-hidden="true"></span>
-      </a>
-      <a href="#work" class="menu__link" data-menu-link data-section="work">
-        <span class="menu__num">04</span>
-        <span class="menu__label">Experience</span>
-        <span class="menu__dot" aria-hidden="true"></span>
-      </a>
-      <a href="#contact" class="menu__link" data-menu-link data-section="contact">
-        <span class="menu__num">05</span>
-        <span class="menu__label">Contact</span>
-        <span class="menu__dot" aria-hidden="true"></span>
-      </a>
-    </nav>
-
-    <div class="menu__connect">
-      <p class="menu__section-label">CONNECT</p>
-      <div class="menu__socials">
-        <a href="https://www.linkedin.com/in/genelibalib" target="_blank" rel="noopener" class="menu__social" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3v9zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19v4.81h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-        </a>
-        <a href="https://www.facebook.com/eugene.libalib/" target="_blank" rel="noopener" class="menu__social" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/gobernador.general/" target="_blank" rel="noopener" class="menu__social" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.86 5.86 0 0 0-2.13 1.38A5.86 5.86 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.73 1.46 1.38 2.13a5.86 5.86 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.86 5.86 0 0 0 2.13-1.38 5.86 5.86 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.86 5.86 0 0 0-1.38-2.13A5.86 5.86 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/@itimnatupangnaligaw" target="_blank" rel="noopener" class="menu__social" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.14V9.4a6.84 6.84 0 0 0-1-.06A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.43a8.16 8.16 0 0 0 4.77 1.52V6.5a4.85 4.85 0 0 1-1.84-.27z"/></svg>
-        </a>
-        <a href="mailto:libeugca@gmail.com" class="menu__social" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
-        </a>
+      <div class="menu__group menu__group--connect">
+        <p class="menu__label"><span class="menu__label-mark" aria-hidden="true">//</span> CONNECT</p>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/genelibalib" target="_blank" rel="noopener" class="social" aria-label="LinkedIn">
+            <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-linkedin"/></svg>
+          </a>
+          <a href="https://www.facebook.com/eugene.libalib/" target="_blank" rel="noopener" class="social" aria-label="Facebook">
+            <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-facebook"/></svg>
+          </a>
+          <a href="https://www.instagram.com/gobernador.general/" target="_blank" rel="noopener" class="social" aria-label="Instagram">
+            <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-instagram"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@itimnatupangnaligaw" target="_blank" rel="noopener" class="social" aria-label="TikTok">
+            <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-tiktok"/></svg>
+          </a>
+          <a href="mailto:libeugca@gmail.com" class="social" aria-label="Email">
+            <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-email"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </aside>
 
-  <main id="top">
+  <main id="main" tabindex="-1">
     <!-- HERO -->
-    <section class="hero">
-      <p class="eyebrow">// PORTFOLIO &nbsp;·&nbsp; QUEZON PROVINCE, PH</p>
-      <h1 class="hero__title">HI, I'M EUGENE LIBALIB</h1>
-      <p class="hero__subtitle">
-        I work as a
-        <span class="role-rotator" aria-live="polite">
-          <span class="role-rotator__word">GoHighLevel Specialist</span>
-        </span>
-      </p>
-      <p class="hero__pitch">
-        I architect end-to-end CRM and marketing automation for multi-client agencies: high-converting funnels, custom HTML landing pages, advanced workflows, and AI voice agents built on Anthropic's Claude models. A2P 10DLC, TCPA, and CAN-SPAM compliance handled so your deliverability stays clean.
-      </p>
-      <div class="hero__cta">
-        <a href="#work" class="btn btn--primary">
-          <span class="btn__icon" aria-hidden="true">▸</span> SEE MY EXPERIENCE
-        </a>
-        <a href="#contact" class="btn btn--ghost">GET IN TOUCH →</a>
-        <a href="assets/Eugene_Libalib_CV.pdf" download class="btn btn--ghost">↓ DOWNLOAD CV</a>
-      </div>
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="wrap hero__inner">
+        <div class="hero__head">
+          <p class="hero__eyebrow"><span class="hero__eyebrow-accent">// PORTFOLIO</span> <span>·</span> <span>QUEZON PROVINCE, PH</span> <span class="rule" aria-hidden="true"></span></p>
+          <h1 class="hero__title" id="hero-title">
+            <span class="hero__title-hi">HI, I’M</span>
+            <span class="hero__title-name">EUGENE</span>
+            <span class="hero__title-name">LIBALIB</span>
+          </h1>
+        </div>
 
-      <!-- Quick nav cards -->
-      <div class="quicknav">
-        <a href="#about" class="quicknav__card">
-          <span class="quicknav__num">01</span>
-          <span class="quicknav__divider" aria-hidden="true"></span>
-          <span class="quicknav__label">About</span>
-        </a>
-        <a href="#expertise" class="quicknav__card">
-          <span class="quicknav__num">02</span>
-          <span class="quicknav__divider" aria-hidden="true"></span>
-          <span class="quicknav__label">Expertise</span>
-        </a>
-        <a href="#work" class="quicknav__card">
-          <span class="quicknav__num">03</span>
-          <span class="quicknav__divider" aria-hidden="true"></span>
-          <span class="quicknav__label">Experience</span>
-        </a>
-        <a href="#contact" class="quicknav__card">
-          <span class="quicknav__num">04</span>
-          <span class="quicknav__divider" aria-hidden="true"></span>
-          <span class="quicknav__label">Contact</span>
-        </a>
+        <div class="hero__body">
+          <div class="hero__lead">
+            <p class="hero__role">I work as a
+              <span class="rotator" data-rotator data-check-ignore="overflow">
+                <span class="rotator__track">
+                  <span class="rotator__item"><span class="rotator__word">GoHighLevel Specialist</span></span>
+                  <span class="rotator__item"><span class="rotator__word">Marketing Automation Architect</span></span>
+                  <span class="rotator__item"><span class="rotator__word">Web Developer</span></span>
+                  <span class="rotator__item"><span class="rotator__word">AI Integrator</span></span>
+                  <span class="rotator__item"><span class="rotator__word">Network Operations Engineer</span></span>
+                  <span class="rotator__item" aria-hidden="true"><span class="rotator__word">GoHighLevel Specialist</span></span>
+                </span>
+              </span>
+            </p>
+            <p class="hero__pitch">I architect end-to-end CRM and marketing automation for multi-client agencies: high-converting funnels, custom HTML landing pages, advanced workflows, and AI voice agents built on Anthropic’s Claude models. A2P 10DLC, TCPA, and CAN-SPAM compliance handled so your deliverability stays clean.</p>
+            <div class="hero__cta">
+              <a href="#work" class="btn btn--primary">
+                <svg class="icon btn__icon btn__icon--arrow" width="14" height="14" aria-hidden="true"><use href="#i-play"/></svg>
+                SEE MY EXPERIENCE
+              </a>
+              <a href="#contact" class="btn btn--ghost">
+                GET IN TOUCH
+                <svg class="icon btn__icon btn__icon--arrow btn__icon--end" width="18" height="18" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <a href="assets/Eugene_Libalib_CV.pdf" download class="btn btn--ghost">
+                <svg class="icon btn__icon btn__icon--down" width="18" height="18" aria-hidden="true"><use href="#i-download"/></svg>
+                DOWNLOAD CV
+              </a>
+            </div>
+          </div>
+
+          <nav class="index" aria-label="Section index">
+            <div class="index__head">
+              <span>INDEX</span>
+            </div>
+            <a href="#about" class="index__link">
+              <span class="index__num">01</span>
+              <span class="index__label">About</span>
+              <svg class="icon index__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="#expertise" class="index__link">
+              <span class="index__num">02</span>
+              <span class="index__label">Expertise</span>
+              <svg class="icon index__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="#websites" class="index__link">
+              <span class="index__num">03</span>
+              <span class="index__label">Websites</span>
+              <svg class="icon index__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="#work" class="index__link">
+              <span class="index__num">04</span>
+              <span class="index__label">Experience</span>
+              <svg class="icon index__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="#contact" class="index__link">
+              <span class="index__num">05</span>
+              <span class="index__label">Contact</span>
+              <svg class="icon index__arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+            </a>
+          </nav>
+        </div>
       </div>
     </section>
 
     <!-- 01 / ABOUT -->
-    <section id="about" class="section" data-counter="01">
-      <header class="section__head">
-        <p class="eyebrow">01 / 04 <span class="slashes">/////////</span></p>
-        <p class="section__kicker">* WHO I AM</p>
-        <h2 class="section__title">ABOUT</h2>
-      </header>
-      <div class="about about--split">
-        <div class="about__text">
-          <p class="about__lede">
-            Lead Automation Engineer &amp; Marketing Specialist with a multi-disciplinary background in GoHighLevel administration, technical support, web development, and MSP operations. I architect end-to-end CRM and marketing automation across multi-client agency environments: high-converting funnels, custom HTML landing pages, advanced workflows, and AI voice agents built on Anthropic's Claude models. My day-to-day engineering runs through a Claude Code setup of custom skills, sub-agents, and scheduled routines.
-          </p>
-          <p>
-            Backed by hands-on experience as a Dell Technical Support Representative, Front-End Developer, On-Call Technician, and NOC Engineer, I bring a rare blend of hardware troubleshooting, front-end development, and network operations expertise. Kaseya Certified in both Autotask PSA and Datto RMM. I bridge technical implementation with clear client communication, translating complex automations into plain-language deliverables that empower businesses to scale with confidence.
-          </p>
-          <div class="about__badges">
-            <span class="badge">GOHIGHLEVEL SPECIALIST</span>
-            <span class="badge">MARKETING AUTOMATION</span>
-            <span class="badge">FRONT-END DEVELOPER</span>
-            <span class="badge">AI INTEGRATION</span>
-            <span class="badge">NETWORK OPS &amp; SUPPORT</span>
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap section__inner">
+        <header class="section__head">
+          <div class="section__meter">
+            <span class="section__count">01 / 05</span>
+            <span class="section__slashes" aria-hidden="true">/////////</span>
+            <span class="rule" aria-hidden="true"></span>
+          </div>
+          <div class="section__heading">
+            <p class="section__kicker">* WHO I AM</p>
+            <h2 class="section__title" id="about-title">ABOUT</h2>
+          </div>
+        </header>
+
+        <div class="about">
+          <figure class="about__photo">
+            <div class="about__frame">
+              <img src="assets/portrait.jpg" alt="Portrait of Eugene Libalib" width="768" height="960" class="about__img" loading="lazy" decoding="async" />
+            </div>
+            <figcaption class="about__caption">
+              <span class="about__caption-key">PHOTO</span>
+              <span>EUGENE LIBALIB</span>
+            </figcaption>
+          </figure>
+
+          <div class="about__text">
+            <p class="about__lede">Lead Automation Engineer &amp; Marketing Specialist with a <span class="nw">multi-disciplinary</span> background in GoHighLevel administration, technical support, web development, and MSP operations. <span class="nw">I architect</span> <span class="nw">end-to-end</span> CRM and marketing automation across <span class="nw">multi-client</span> agency environments: <span class="nw">high-converting</span> funnels, custom HTML landing pages, advanced workflows, and AI voice agents built on Anthropic’s Claude models. My <span class="nw">day-to-day</span> engineering runs through a Claude Code setup of custom skills, <span class="nw">sub-agents,</span> and scheduled routines.</p>
+            <p class="about__para">Backed by <span class="nw">hands-on</span> experience as a Dell Technical Support Representative, <span class="nw">Front-End</span> Developer, <span class="nw">On-Call</span> Technician, and NOC Engineer, I bring a rare blend of hardware troubleshooting, <span class="nw">front-end</span> development, and network operations expertise. Kaseya Certified in both Autotask PSA and Datto RMM. I bridge technical implementation with clear client communication, translating complex automations into <span class="nw">plain-language</span> deliverables that empower businesses to scale with confidence.</p>
+            <ul class="about__badges" role="list">
+              <li class="badge">GOHIGHLEVEL SPECIALIST</li>
+              <li class="badge">MARKETING AUTOMATION</li>
+              <li class="badge">FRONT-END DEVELOPER</li>
+              <li class="badge">AI INTEGRATION</li>
+              <li class="badge">NETWORK OPS &amp; SUPPORT</li>
+            </ul>
           </div>
         </div>
-        <figure class="about__photo">
-          <div class="about__photo-frame">
-            <img src="assets/portrait.jpg" alt="Portrait of Eugene Libalib" loading="lazy" />
-          </div>
-          <figcaption class="about__caption">
-            <span>PHOTO</span>
-            <span class="about__caption-name">EUGENE LIBALIB</span>
-          </figcaption>
-        </figure>
       </div>
     </section>
 
     <!-- 02 / EXPERTISE -->
-    <section id="expertise" class="section" data-counter="02">
-      <header class="section__head">
-        <p class="eyebrow">02 / 04 <span class="slashes">/////////</span></p>
-        <p class="section__kicker">* FIVE DISCIPLINES</p>
-        <h2 class="section__title">EXPERTISE</h2>
-        <p class="section__lede">One operator, five complementary disciplines, built from a decade of hands-on work in support, dev, and automation.</p>
-      </header>
-
-      <div class="grid grid--expertise">
-        <article class="card" data-role="ghl">
-          <div class="card__head">
-            <span class="card__num">01</span>
-            <span class="card__open" aria-hidden="true">↗</span>
+    <section class="section" id="expertise" aria-labelledby="expertise-title">
+      <div class="wrap section__inner">
+        <header class="section__head">
+          <div class="section__meter">
+            <span class="section__count">02 / 05</span>
+            <span class="section__slashes" aria-hidden="true">/////////</span>
+            <span class="rule" aria-hidden="true"></span>
           </div>
-          <h3 class="card__title">GoHighLevel Specialist</h3>
-          <p class="card__body">End-to-end CRM administration across multi-client agency sub-accounts.</p>
-          <ul class="card__skills">
-            <li>CRM administration</li>
-            <li>Sales funnel architecture</li>
-            <li>Workflow automation</li>
-            <li>A2P 10DLC &amp; TCPA</li>
-            <li>Pipeline &amp; trigger logic</li>
-          </ul>
-        </article>
-
-        <article class="card" data-role="growth">
-          <div class="card__head">
-            <span class="card__num">02</span>
-            <span class="card__open" aria-hidden="true">↗</span>
+          <div class="section__heading section__heading--rack">
+            <div class="section__titles">
+              <p class="section__kicker">* FIVE DISCIPLINES</p>
+              <h2 class="section__title" id="expertise-title"><span class="section__title-line section__title-line--nudge-e">EXPERTISE</span></h2>
+            </div>
+            <p class="section__lede">One operator, five complementary disciplines, built from a decade of <span class="nw">hands-on</span> work in support, dev, and automation.</p>
           </div>
-          <h3 class="card__title">Marketing Automation</h3>
-          <p class="card__body">Funnels, sequences, and conversion plumbing that turn lead chaos into measurable revenue.</p>
-          <ul class="card__skills">
-            <li>High-converting funnels</li>
-            <li>Missed-call text-back</li>
-            <li>Multi-step SMS sequences</li>
-            <li>CAN-SPAM compliance</li>
-            <li>Lifecycle &amp; reactivation</li>
-          </ul>
-        </article>
+        </header>
 
-        <article class="card" data-role="web">
-          <div class="card__head">
-            <span class="card__num">03</span>
-            <span class="card__open" aria-hidden="true">↗</span>
-          </div>
-          <h3 class="card__title">Front-End Developer</h3>
-          <p class="card__body">Pixel-accurate, cross-browser front-end and custom landing pages, from design to live deploy.</p>
-          <ul class="card__skills">
-            <li>HTML, CSS, JavaScript</li>
-            <li>Landing page development</li>
-            <li>Responsive &amp; mobile-first</li>
-            <li>Domain &amp; DNS setup</li>
-            <li>Adobe Photoshop</li>
-          </ul>
-        </article>
+        <div class="rack">
+          <article class="module" data-role="ghl">
+            <div class="module__strip">
+              <span>01</span>
+              <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="module__body">
+              <h3 class="module__title"><a href="#work" class="module__link" aria-label="GoHighLevel Specialist, show matching experience">GoHighLevel Specialist</a></h3>
+              <p class="module__desc">End-to-end CRM administration across <span class="nw">multi-client</span> agency <span class="nw">sub-accounts.</span></p>
+              <ul class="module__list" role="list">
+                <li>CRM administration</li>
+                <li>Sales funnel architecture</li>
+                <li>Workflow automation</li>
+                <li>A2P 10DLC &amp; TCPA</li>
+                <li>Pipeline &amp; trigger logic</li>
+              </ul>
+            </div>
+          </article>
 
-        <article class="card" data-role="ai">
-          <div class="card__head">
-            <span class="card__num">04</span>
-            <span class="card__open" aria-hidden="true">↗</span>
-          </div>
-          <h3 class="card__title">AI Integration</h3>
-          <p class="card__body">AI voice agents on Anthropic's Claude models, a Claude Code engineering setup, and Node.js middleware that put intelligence inside the funnel.</p>
-          <ul class="card__skills">
-            <li>Claude Code &amp; Claude models</li>
-            <li>AI-powered call agents</li>
-            <li>Node.js middleware</li>
-            <li>Prompt engineering</li>
-            <li>Workflow + AI orchestration</li>
-          </ul>
-        </article>
+          <article class="module" data-role="growth">
+            <div class="module__strip">
+              <span>02</span>
+              <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="module__body">
+              <h3 class="module__title"><a href="#work" class="module__link" aria-label="Marketing Automation, show matching experience">Marketing Automation</a></h3>
+              <p class="module__desc">Funnels, sequences, and conversion plumbing that turn lead chaos into measurable revenue.</p>
+              <ul class="module__list" role="list">
+                <li>High-converting funnels</li>
+                <li>Missed-call text-back</li>
+                <li>Multi-step SMS sequences</li>
+                <li>CAN-SPAM compliance</li>
+                <li>Lifecycle &amp; reactivation</li>
+              </ul>
+            </div>
+          </article>
 
-        <article class="card" data-role="support">
-          <div class="card__head">
-            <span class="card__num">05</span>
-            <span class="card__open" aria-hidden="true">↗</span>
-          </div>
-          <h3 class="card__title">Network Ops &amp; Support</h3>
-          <p class="card__body">NOC-grade monitoring, hardware troubleshooting, and Tier-1-through-3 escalation experience.</p>
-          <ul class="card__skills">
-            <li>24/7 network monitoring</li>
-            <li>Kaseya Autotask PSA</li>
-            <li>Datto RMM</li>
-            <li>Hardware diagnostics</li>
-            <li>SLA &amp; ticket lifecycle</li>
-          </ul>
-        </article>
+          <article class="module" data-role="web">
+            <div class="module__strip">
+              <span>03</span>
+              <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="module__body">
+              <h3 class="module__title"><a href="#work" class="module__link" aria-label="Front-End Developer, show matching experience">Front-End Developer</a></h3>
+              <p class="module__desc">Pixel-accurate, cross-browser front-end and custom landing pages, from design to live deploy.</p>
+              <ul class="module__list" role="list">
+                <li>HTML, CSS, JavaScript</li>
+                <li>Landing page development</li>
+                <li>Responsive &amp; mobile-first</li>
+                <li>Domain &amp; DNS setup</li>
+                <li>Adobe Photoshop</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="module" data-role="ai">
+            <div class="module__strip">
+              <span>04</span>
+              <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="module__body">
+              <h3 class="module__title"><a href="#work" class="module__link" aria-label="AI Integration, show matching experience">AI Integration</a></h3>
+              <p class="module__desc">AI voice agents on Anthropic’s Claude models, a Claude Code engineering setup, and Node.js middleware that put intelligence inside the funnel.</p>
+              <ul class="module__list" role="list">
+                <li>Claude Code &amp; Claude models</li>
+                <li>AI-powered call agents</li>
+                <li>Node.js middleware</li>
+                <li>Prompt engineering</li>
+                <li>Workflow + AI orchestration</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="module" data-role="support">
+            <div class="module__strip">
+              <span>05</span>
+              <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <div class="module__body">
+              <h3 class="module__title"><a href="#work" class="module__link" aria-label="Network Ops &amp; Support, show matching experience">Network Ops <span class="nw">&amp; Support</span></a></h3>
+              <p class="module__desc">NOC-grade monitoring, hardware troubleshooting, and <span class="nw">Tier-1-through-3</span> escalation experience.</p>
+              <ul class="module__list" role="list">
+                <li>24/7 network monitoring</li>
+                <li>Kaseya Autotask PSA</li>
+                <li>Datto RMM</li>
+                <li>Hardware diagnostics</li>
+                <li>SLA &amp; ticket lifecycle</li>
+              </ul>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- 03 / EXPERIENCE -->
-    <section id="work" class="section" data-counter="03">
-      <header class="section__head">
-        <p class="eyebrow">03 / 04 <span class="slashes">/////////</span></p>
-        <p class="section__kicker">* BUILT TO SHIP</p>
-        <h2 class="section__title">SELECTED EXPERIENCE</h2>
-        <p class="section__lede">Filter by discipline.</p>
-      </header>
-
-      <div class="filters" role="tablist" aria-label="Filter experience by discipline">
-        <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button class="chip" data-filter="ghl" role="tab" aria-selected="false">GHL / CRM</button>
-        <button class="chip" data-filter="growth" role="tab" aria-selected="false">Growth</button>
-        <button class="chip" data-filter="web" role="tab" aria-selected="false">Web Dev</button>
-        <button class="chip" data-filter="ai" role="tab" aria-selected="false">AI</button>
-        <button class="chip" data-filter="support" role="tab" aria-selected="false">Network Ops</button>
-      </div>
-
-      <div class="grid grid--work">
-        <article class="project" data-roles="ghl web growth ai">
-          <div class="project__thumb"><img src="assets/arisecrm.jpg" alt="ArisECRM" loading="lazy" /></div>
-          <div class="project__body">
-            <p class="project__meta">2025-Present &nbsp;·&nbsp; Lead Automation Engineer &amp; Marketing Specialist · GHL Specialist · Front-End Developer</p>
-            <h3 class="project__title">ArisECRM · MyBlueCrew · BHM · JCMR Agency</h3>
-            <p class="project__desc">Run day-to-day GHL operations across 5 active client sub-accounts: funnels, full websites built in custom HTML, private integrations, and the automations and reporting that keep every account compliant and measurable. Recent deliverables include fully custom GHL websites built from hand-written HTML, a Voice AI Receptionist for inbound call handling, multi-step automation workflows, email campaigns, and the graphics that ship with each build. Own A2P 10DLC, TCPA, and CAN-SPAM compliance plus client-facing reporting.</p>
-            <div class="project__tags">
-              <span class="tag">GHL / CRM</span>
-              <span class="tag">Web Dev</span>
-              <span class="tag">Growth</span>
-              <span class="tag">AI</span>
-            </div>
+    <!-- 03 / WEBSITE BUILDS -->
+    <section class="section" id="websites" aria-labelledby="websites-title">
+      <div class="wrap section__inner">
+        <header class="section__head">
+          <div class="section__meter">
+            <span class="section__count">03 / 05</span>
+            <span class="section__slashes" aria-hidden="true">/////////</span>
+            <span class="rule" aria-hidden="true"></span>
           </div>
-        </article>
-
-        <article class="project" data-roles="support">
-          <div class="project__thumb"><img src="assets/carabao cloud solution.jpg" alt="Carabao Clouds Solutions" loading="lazy" /></div>
-          <div class="project__body">
-            <p class="project__meta">2023-2024 &nbsp;·&nbsp; Network Operations Center (NOC) Engineer</p>
-            <h3 class="project__title">Carabao Clouds Solutions</h3>
-            <p class="project__desc">Monitored enterprise network infrastructure 24/7, proactively detecting and resolving incidents to maintain peak uptime. Triaged alerts, diagnosed connectivity and latency issues, and coordinated rapid escalations with Tier 2 and 3 teams. Managed ticket lifecycles end-to-end, documented root-cause analyses, and supported routers, switches, and firewalls. Consistently met SLA targets.</p>
-            <div class="project__tags">
-              <span class="tag">Network Ops</span>
+          <div class="section__heading section__heading--sites">
+            <div class="section__titles">
+              <p class="section__kicker">* IN MOTION</p>
+              <h2 class="section__title" id="websites-title"><span class="section__title-line">WEBSITE</span> <span class="section__title-line section__title-line--nudge-e">BUILDS</span></h2>
             </div>
+            <p class="section__lede section__lede--lg">Websites I created for clients, each shown as a short screen capture.</p>
           </div>
-        </article>
+        </header>
 
-        <article class="project" data-roles="support">
-          <div class="project__thumb"><img src="assets/zero harware specialist.jpg" alt="Zero Hardware Specialist" loading="lazy" /></div>
-          <div class="project__body">
-            <p class="project__meta">2020-Present &nbsp;·&nbsp; On-Call Technician</p>
-            <h3 class="project__title">Zero · Hardware Specialist (Windows OS)</h3>
-            <p class="project__desc">Build and repair desktops and laptops, delivering custom rig configurations tailored to client needs, from everyday productivity setups to high-performance gaming and workstation builds. Diagnose and resolve hardware and software issues through hands-on troubleshooting, component upgrades, and full system installations.</p>
-            <div class="project__tags">
-              <span class="tag">Network Ops</span>
-              <span class="tag">Hardware</span>
+        <div class="sites">
+          <figure class="site site--feature">
+            <div class="frame">
+              <div class="frame__strip">
+                <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <div class="frame__meta">
+                  <span class="frame__count">01 / 03</span>
+                  <button type="button" class="frame__toggle" data-video-toggle aria-pressed="false" aria-label="Pause the HyBar screen capture">
+                    <span class="frame__toggle-face">
+                      <svg class="icon frame__toggle-icon frame__toggle-icon--pause" width="10" height="10" aria-hidden="true"><use href="#i-pause"/></svg>
+                      <svg class="icon frame__toggle-icon frame__toggle-icon--play" width="10" height="10" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span data-video-toggle-text>PAUSE</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="frame__screen">
+                <video class="frame__video" src="assets/arisecrm-video-hybar-hd.mp4" poster="assets/poster-hybar.jpg" width="1920" height="1080" muted loop playsinline preload="metadata" aria-label="Screen capture of the HyBar website"></video>
+              </div>
             </div>
-          </div>
-        </article>
+            <figcaption class="site__caption">
+              <h3 class="site__name">HyBar</h3>
+              <p class="site__desc">Windows and doors company in Las Vegas, Nevada</p>
+            </figcaption>
+          </figure>
 
-        <article class="project" data-roles="web">
-          <div class="project__thumb"><img src="assets/guavatek.jpg" alt="Guavatek Canada" loading="lazy" /></div>
-          <div class="project__body">
-            <p class="project__meta">2019-2021 &nbsp;·&nbsp; Junior FRONT-END DEVELOPER</p>
-            <h3 class="project__title">Guavatek Canada · Ecommerce &amp; Campaign</h3>
-            <p class="project__desc">Built and maintained responsive front-end experiences for e-commerce stores and campaign websites using HTML, CSS, and JavaScript. Translated designs into clean, cross-browser code; configured website settings end-to-end including domain setup and DNS records. Optimized page performance, ensured mobile responsiveness, and delivered pixel-accurate builds that supported marketing launches and drove user engagement across live campaigns.</p>
-            <div class="project__tags">
-              <span class="tag">Web Dev</span>
+          <figure class="site">
+            <div class="frame">
+              <div class="frame__strip">
+                <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <div class="frame__meta">
+                  <span class="frame__count">02 / 03</span>
+                  <button type="button" class="frame__toggle" data-video-toggle aria-pressed="false" aria-label="Pause the Sanpete School of the Performing Arts screen capture">
+                    <span class="frame__toggle-face">
+                      <svg class="icon frame__toggle-icon frame__toggle-icon--pause" width="10" height="10" aria-hidden="true"><use href="#i-pause"/></svg>
+                      <svg class="icon frame__toggle-icon frame__toggle-icon--play" width="10" height="10" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span data-video-toggle-text>PAUSE</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="frame__screen">
+                <video class="frame__video" src="assets/arisecrm-video-sanpete-hd.mp4" poster="assets/poster-sanpete.jpg" width="1920" height="1080" muted loop playsinline preload="metadata" aria-label="Screen capture of the Sanpete School of the Performing Arts website"></video>
+              </div>
             </div>
-          </div>
-        </article>
+            <figcaption class="site__caption">
+              <h3 class="site__name">Sanpete School of the Performing Arts</h3>
+              <p class="site__desc">Performing arts school in Spring City, Utah</p>
+            </figcaption>
+          </figure>
 
-        <article class="project" data-roles="support">
-          <div class="project__thumb"><img src="assets/dell computers.jpg" alt="Dell Computers" loading="lazy" /></div>
-          <div class="project__body">
-            <p class="project__meta">2017-2019 &nbsp;·&nbsp; Technical Support · CSR</p>
-            <h3 class="project__title">Dell Computers · US &amp; UK Accounts</h3>
-            <p class="project__desc">Delivered end-to-end customer support through inbound and outbound calls, resolving complex software and hardware issues with precision and empathy. Managed CRM records, documented case histories, and ensured seamless escalation handoffs. Consistently exceeded CSAT targets and maintained excellent AHT, FCR, and quality scores, turning frustrated customers into loyal advocates of the Dell brand.</p>
-            <div class="project__tags">
-              <span class="tag">Support</span>
-              <span class="tag">CRM</span>
+          <figure class="site">
+            <div class="frame">
+              <div class="frame__strip">
+                <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+                <div class="frame__meta">
+                  <span class="frame__count">03 / 03</span>
+                  <button type="button" class="frame__toggle" data-video-toggle aria-pressed="false" aria-label="Pause the Brill Hernández Media screen capture">
+                    <span class="frame__toggle-face">
+                      <svg class="icon frame__toggle-icon frame__toggle-icon--pause" width="10" height="10" aria-hidden="true"><use href="#i-pause"/></svg>
+                      <svg class="icon frame__toggle-icon frame__toggle-icon--play" width="10" height="10" aria-hidden="true"><use href="#i-play"/></svg>
+                      <span data-video-toggle-text>PAUSE</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="frame__screen">
+                <video class="frame__video" src="assets/arisecrm-video-bhm-hd.mp4" poster="assets/poster-bhm.jpg" width="1920" height="1080" muted loop playsinline preload="metadata" aria-label="Screen capture of the Brill Hernández Media website"></video>
+              </div>
             </div>
-          </div>
-        </article>
+            <figcaption class="site__caption">
+              <h3 class="site__name">Brill Hernández Media</h3>
+              <p class="site__desc">Marketing agency</p>
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
-    <!-- 04 / CONTACT -->
-    <section id="contact" class="section section--contact" data-counter="04">
-      <header class="section__head section__head--centered">
-        <p class="eyebrow">04 / 04 <span class="slashes">/////////</span></p>
-        <p class="section__kicker">* TRANSMISSION</p>
-        <h2 class="section__title">LET'S BUILD</h2>
-        <p class="section__lede">
-          Need a GoHighLevel build, a custom landing page, or an AI-powered automation that actually closes? Let's talk.
-        </p>
-      </header>
+    <!-- 04 / EXPERIENCE -->
+    <section class="section section--work" id="work" aria-labelledby="work-title">
+      <div class="wrap section__inner">
+        <header class="section__head">
+          <div class="section__meter">
+            <span class="section__count">04 / 05</span>
+            <span class="section__slashes" aria-hidden="true">/////////</span>
+            <span class="rule" aria-hidden="true"></span>
+          </div>
+          <div class="section__heading">
+            <p class="section__kicker">* BUILT TO SHIP</p>
+            <h2 class="section__title" id="work-title"><span class="section__title-line section__title-line--nudge-s">SELECTED</span> <span class="section__title-line section__title-line--nudge-e">EXPERIENCE</span></h2>
+          </div>
+        </header>
 
-      <div class="contact">
-        <a class="btn btn--primary" href="mailto:libeugca@gmail.com">
-          libeugca@gmail.com →
-        </a>
-        <a class="btn btn--ghost" href="assets/Eugene_Libalib_CV.pdf" download>↓ DOWNLOAD CV</a>
-        <div class="contact__socials">
-          <a href="https://www.linkedin.com/in/genelibalib" target="_blank" rel="noopener">LinkedIn</a>
-          <span class="dot" aria-hidden="true">·</span>
-          <span>Quezon Province, Philippines</span>
+        <div class="ledger">
+          <div class="ledger__filter">
+            <p class="ledger__hint" id="filter-label">Filter by discipline.</p>
+            <div class="chips" role="group" aria-labelledby="filter-label">
+              <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" class="chip" data-filter="ghl" aria-pressed="false">GHL / CRM</button>
+              <button type="button" class="chip" data-filter="growth" aria-pressed="false">Growth</button>
+              <button type="button" class="chip" data-filter="web" aria-pressed="false">Web Dev</button>
+              <button type="button" class="chip" data-filter="ai" aria-pressed="false">AI</button>
+              <button type="button" class="chip" data-filter="support" aria-pressed="false">Network Ops</button>
+            </div>
+            <p class="visually-hidden" id="filter-status" aria-live="polite"></p>
+          </div>
+
+          <div class="ledger__rows">
+            <article class="ledger__row" data-roles="ghl web growth ai">
+              <div class="ledger__when">
+                <span class="ledger__years">2025-Present</span>
+                <span class="ledger__num">01</span>
+              </div>
+              <div class="ledger__thumb">
+                <img src="assets/arisecrm.jpg" alt="ArisECRM" width="1200" height="630" class="ledger__img" loading="lazy" decoding="async" />
+              </div>
+              <div class="ledger__body">
+                <p class="ledger__roles"><span>Lead Automation Engineer &amp; Marketing Specialist</span><span aria-hidden="true">·</span><span>GHL Specialist</span><span aria-hidden="true">·</span><span>Front-End Developer</span></p>
+                <h3 class="ledger__title">ArisECRM <span class="ledger__sep" aria-hidden="true">·</span> MyBlueCrew <span class="ledger__sep" aria-hidden="true">·</span> BHM <span class="ledger__sep" aria-hidden="true">·</span> JCMR Agency</h3>
+                <p class="ledger__desc">Run <span class="nw">day-to-day</span> GHL operations across 5 active client <span class="nw">sub-accounts:</span> funnels, full websites built in custom HTML, private integrations, and the automations and reporting that keep every account compliant and measurable. Recent deliverables include fully custom GHL websites built from <span class="nw">hand-written</span> HTML, a Voice AI Receptionist for inbound call handling, <span class="nw">multi-step</span> automation workflows, email campaigns, and the graphics that ship with each build. Own A2P 10DLC, TCPA, and CAN-SPAM compliance plus <span class="nw">client-facing</span> reporting.</p>
+                <ul class="tags" role="list">
+                  <li class="tag">GHL / CRM</li>
+                  <li class="tag">Web Dev</li>
+                  <li class="tag">Growth</li>
+                  <li class="tag">AI</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="ledger__row" data-roles="support">
+              <div class="ledger__when">
+                <span class="ledger__years">2023-2024</span>
+                <span class="ledger__num">02</span>
+              </div>
+              <div class="ledger__thumb">
+                <img src="assets/carabao cloud solution.jpg" alt="Carabao Clouds Solutions" width="1200" height="630" class="ledger__img" loading="lazy" decoding="async" />
+              </div>
+              <div class="ledger__body">
+                <p class="ledger__roles"><span>Network Operations Center (NOC) Engineer</span></p>
+                <h3 class="ledger__title">Carabao Clouds Solutions</h3>
+                <p class="ledger__desc">Monitored enterprise network infrastructure 24/7, proactively detecting and resolving incidents to maintain peak uptime. Triaged alerts, diagnosed connectivity and latency issues, and coordinated rapid escalations with Tier 2 and 3 teams. Managed ticket lifecycles <span class="nw">end-to-end,</span> documented <span class="nw">root-cause</span> analyses, and supported routers, switches, and firewalls. Consistently met SLA targets.</p>
+                <ul class="tags" role="list">
+                  <li class="tag">Network Ops</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="ledger__row" data-roles="support">
+              <div class="ledger__when">
+                <span class="ledger__years">2020-Present</span>
+                <span class="ledger__num">03</span>
+              </div>
+              <div class="ledger__thumb">
+                <img src="assets/zero harware specialist.jpg" alt="Zero Hardware Specialist" width="1200" height="630" class="ledger__img" loading="lazy" decoding="async" />
+              </div>
+              <div class="ledger__body">
+                <p class="ledger__roles"><span>On-Call Technician</span></p>
+                <h3 class="ledger__title">Zero <span class="ledger__sep" aria-hidden="true">·</span> Hardware Specialist (Windows OS)</h3>
+                <p class="ledger__desc">Build and repair desktops and laptops, delivering custom rig configurations tailored to client needs, from everyday productivity setups to <span class="nw">high-performance</span> gaming and workstation builds. Diagnose and resolve hardware and software issues through <span class="nw">hands-on</span> troubleshooting, component upgrades, and full system installations.</p>
+                <ul class="tags" role="list">
+                  <li class="tag">Network Ops</li>
+                  <li class="tag">Hardware</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="ledger__row" data-roles="web">
+              <div class="ledger__when">
+                <span class="ledger__years">2019-2021</span>
+                <span class="ledger__num">04</span>
+              </div>
+              <div class="ledger__thumb">
+                <img src="assets/guavatek.jpg" alt="Guavatek Canada" width="1200" height="630" class="ledger__img" loading="lazy" decoding="async" />
+              </div>
+              <div class="ledger__body">
+                <p class="ledger__roles"><span>Junior FRONT-END DEVELOPER</span></p>
+                <h3 class="ledger__title">Guavatek Canada <span class="ledger__sep" aria-hidden="true">·</span> Ecommerce &amp; Campaign</h3>
+                <p class="ledger__desc">Built and maintained responsive <span class="nw">front-end</span> experiences for <span class="nw">e-commerce</span> stores and campaign websites using HTML, CSS, and JavaScript. Translated designs into clean, <span class="nw">cross-browser</span> code; configured website settings <span class="nw">end-to-end</span> including domain setup and DNS records. Optimized page performance, ensured mobile responsiveness, and delivered <span class="nw">pixel-accurate</span> builds that supported marketing launches and drove user engagement across live campaigns.</p>
+                <ul class="tags" role="list">
+                  <li class="tag">Web Dev</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="ledger__row" data-roles="support">
+              <div class="ledger__when">
+                <span class="ledger__years">2017-2019</span>
+                <span class="ledger__num">05</span>
+              </div>
+              <div class="ledger__thumb">
+                <img src="assets/dell computers.jpg" alt="Dell Computers" width="1200" height="630" class="ledger__img" loading="lazy" decoding="async" />
+              </div>
+              <div class="ledger__body">
+                <p class="ledger__roles"><span>Technical Support</span><span aria-hidden="true">·</span><span>CSR</span></p>
+                <h3 class="ledger__title">Dell Computers <span class="ledger__sep" aria-hidden="true">·</span> US &amp; UK Accounts</h3>
+                <p class="ledger__desc">Delivered <span class="nw">end-to-end</span> customer support through inbound and outbound calls, resolving complex software and hardware issues with precision and empathy. Managed CRM records, documented case histories, and ensured seamless escalation handoffs. Consistently exceeded CSAT targets and maintained excellent AHT, FCR, and quality scores, turning frustrated customers into loyal advocates of the Dell brand.</p>
+                <ul class="tags" role="list">
+                  <li class="tag">Support</li>
+                  <li class="tag">CRM</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / CONTACT -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact__inner">
+        <div class="section__meter section__meter--on-accent">
+          <span>05 / 05</span>
+          <span class="section__slashes" aria-hidden="true">/////////</span>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="contact__grid">
+          <div class="contact__lead">
+            <p class="contact__kicker">* TRANSMISSION</p>
+            <h2 class="contact__title" id="contact-title"><span class="contact__title-line">LET’S</span> <span class="contact__title-line">BUILD</span></h2>
+          </div>
+          <div class="contact__side">
+            <p class="contact__pitch">Need a GoHighLevel build, a custom landing page, or an AI-powered automation that actually closes? Let’s talk.</p>
+            <div class="contact__actions">
+              <a href="mailto:libeugca@gmail.com" class="btn btn--dark">
+                libeugca@gmail.com
+                <svg class="icon btn__icon btn__icon--arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <a href="assets/Eugene_Libalib_CV.pdf" download class="btn btn--line">
+                DOWNLOAD CV
+                <svg class="icon btn__icon btn__icon--down" width="20" height="20" aria-hidden="true"><use href="#i-download"/></svg>
+              </a>
+            </div>
+            <p class="contact__links">
+              <a href="https://www.linkedin.com/in/genelibalib" target="_blank" rel="noopener" class="contact__link">LinkedIn</a>
+              <span aria-hidden="true">·</span>
+              <span>Quezon Province, Philippines</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer__left">
-      <img src="assets/ECL Logo.png" alt="" class="nav__mark" aria-hidden="true" />
-    </div>
-    <p class="footer__center">© <span id="year"></span> Eugene Libalib · All rights reserved.</p>
-    <div class="footer__right">
-      <a href="https://www.linkedin.com/in/genelibalib" target="_blank" rel="noopener" class="footer__social" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3v9zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19v4.81h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-      </a>
-      <a href="https://www.facebook.com/eugene.libalib/" target="_blank" rel="noopener" class="footer__social" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-      </a>
-      <a href="https://www.instagram.com/gobernador.general/" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.86 5.86 0 0 0-2.13 1.38A5.86 5.86 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.73 1.46 1.38 2.13a5.86 5.86 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.86 5.86 0 0 0 2.13-1.38 5.86 5.86 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.86 5.86 0 0 0-1.38-2.13A5.86 5.86 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
-      </a>
-      <a href="https://www.tiktok.com/@itimnatupangnaligaw" target="_blank" rel="noopener" class="footer__social" aria-label="TikTok">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.14V9.4a6.84 6.84 0 0 0-1-.06A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.43a8.16 8.16 0 0 0 4.77 1.52V6.5a4.85 4.85 0 0 1-1.84-.27z"/></svg>
-      </a>
-      <a href="mailto:libeugca@gmail.com" class="footer__social" aria-label="Email">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
-      </a>
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="wrap footer__inner">
+      <div class="footer__left">
+        <a href="#top" class="footer__top" aria-label="Back to top">
+          <span class="mark mark--lg"><img src="assets/ECL Logo.png" alt="" width="40" height="40" class="mark__img" loading="lazy" decoding="async" /></span>
+        </a>
+        <p class="footer__copy">© <span id="year"></span> Eugene Libalib · All rights reserved.</p>
+      </div>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/genelibalib" target="_blank" rel="noopener" class="social" aria-label="LinkedIn">
+          <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-linkedin"/></svg>
+        </a>
+        <a href="https://www.facebook.com/eugene.libalib/" target="_blank" rel="noopener" class="social" aria-label="Facebook">
+          <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-facebook"/></svg>
+        </a>
+        <a href="https://www.instagram.com/gobernador.general/" target="_blank" rel="noopener" class="social" aria-label="Instagram">
+          <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-instagram"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@itimnatupangnaligaw" target="_blank" rel="noopener" class="social" aria-label="TikTok">
+          <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-tiktok"/></svg>
+        </a>
+        <a href="mailto:libeugca@gmail.com" class="social" aria-label="Email">
+          <svg class="icon" width="18" height="18" aria-hidden="true"><use href="#i-email"/></svg>
+        </a>
+      </div>
     </div>
   </footer>
 
