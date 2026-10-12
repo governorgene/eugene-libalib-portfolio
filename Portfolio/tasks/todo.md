@@ -2,12 +2,21 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-10-12 · Case 04 shipped, Claude-model claim softened
+
+- [x] Case 04 (`aab4e0a`) had been sitting unmerged on `claude/magical-albattani-oz9ckt`. Fast-forwarded into `main` at the owner's word, pushed, Pages build `built aab4e0a`, and the live page contains `id="case-receptionist"`. Both stray `claude/*` branches were then deleted from GitHub. Rollback SHAs: `aab4e0a` (magical-albattani), `b93645f` (wizardly-brahmagupta, already on `main`).
+- [x] The voice-agent claim is softened, as the owner chose, because no source shows which model the agents run on. Hero, About and AI card now say "AI voice agents (built) in GoHighLevel"; the AI card skill "Claude Code & Claude models" is now "Claude Code". CV summary is now "I build AI voice agents in GoHighLevel". The Claude Code setup line stays, because it is true.
+- [x] The generic cover letter still said "integrated the Anthropic Claude API to power AI-driven response agents", the same unsupported line the CV dropped on 2026-09-18. Now it reads "build AI voice agents in GoHighLevel". Its two em dashes were replaced as well.
+- [x] CV and cover letter PDFs re-exported (playwright-core + system Chrome, `document.fonts.ready`): each is still 1 A4 page; pypdf shows 0 "Anthropic", 0 "Claude models", 0 dashes, and no doubled text. `assets/Eugene_Libalib_CV.pdf` is byte-identical to `CV/Eugene_Libalib_CV.pdf`. The CV render was checked by eye; the site at 1440px shows 0 matches, no console errors and no horizontal scroll.
+- [ ] Left as is, owner's call: the CV skill "Claude AI Integration" and the meta description's "Claude AI integration". They make no claim about which model runs, but a reader may take them to mean Claude is built into client systems.
+- [ ] `redesign/control-room` still carries the old Claude-model copy; it has to pick up this change along with Cases 01 to 04 before it ships.
+
 ## 2026-10-02 · Case 04: bilingual AI phone receptionist
 
 - [x] Added `#case-receptionist`: the Voice AI receptionist rebuilt for a windows and doors client, kept anonymous (no client or persona name, per Gene). Facts come from the client's project repo, the live GoHighLevel account (read-only), and Teams/Outlook, then checked against primary sources by a separate fact pass and a confidentiality pass.
 - [x] Wording follows what the sources support: "took over ... rebuilt" (an earlier agent existed before March 2026); the platform is GoHighLevel Voice AI; booking-detail gathering is described as the design, not a guarantee; metrics are call-log counts (288 calls Jul 3 to Oct 1 incl. a few internal tests, 104 live transfers, 49 voice-booked appointments Jul to Sep). No before/after claims, because no pre-agent baseline exists.
 - [x] Section lede now lists the receptionist. Checked in headless Chrome at 1440, 1000, 700 and 375px: no console errors, no new overflow, 0 em or en dashes, no client name, persona name or phone number in the page.
-- [ ] Open question for Gene: the hero, About and AI cards (and the CV) say the voice agents run "on Anthropic's Claude models". No source supports that for this agent (only "GHL Voice AI"); Claude shows up as the build assistant. Confirm the model or soften the wording.
+- [x] ~~Open question for Gene: the hero, About and AI cards (and the CV) say the voice agents run "on Anthropic's Claude models". No source supports that for this agent (only "GHL Voice AI"); Claude shows up as the build assistant. Confirm the model or soften the wording.~~ Resolved 2026-10-12: softened (see the entry above).
 - [ ] Optional: blurred screenshot of the agent config or call flow for the media panel.
 
 ## 2026-10-01 · Case studies section
