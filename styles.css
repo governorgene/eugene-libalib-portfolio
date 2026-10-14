@@ -341,9 +341,14 @@ body.menu-open { overflow: hidden; }
 }
 .hero__cta {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.75rem 1.5rem;
   flex-wrap: wrap;
   margin-bottom: 4rem;
+}
+/* The two text links wrap as one unit, so a phone never strands one of them on its own row. */
+.hero__cta-links {
+  display: flex;
+  gap: 1.5rem;
 }
 
 /* ============ BUTTONS ============ */
@@ -374,21 +379,35 @@ body.menu-open { overflow: hidden; }
   color: var(--accent);
   box-shadow: 0 0 24px var(--accent-glow);
 }
-.btn--ghost {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border-strong);
-}
-.btn--ghost:hover {
-  opacity: 1;
-  background: transparent;
-  color: var(--accent);
-  border-color: var(--accent);
-}
 .btn__icon {
   display: inline-block;
   font-size: 0.65rem;
 }
+/* Secondary actions as text links, so the primary button carries the visual weight.
+   Keeps .btn's vertical padding: the hit area stays as tall as the button beside it.
+   No side padding, so a link that wraps to its own row lines up with the text above. */
+.btn--link {
+  padding-inline: 0;
+  background: transparent;
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.4em;
+}
+.btn--link:hover,
+.btn--link:focus-visible {
+  opacity: 1;
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+.btn__arrow {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.btn--link:hover .btn__arrow,
+.btn--link:focus-visible .btn__arrow { transform: translateX(3px); }
+.btn--link:hover .btn__arrow--down,
+.btn--link:focus-visible .btn__arrow--down { transform: translateY(3px); }
 
 /* ============ QUICK NAV ============ */
 .quicknav {
