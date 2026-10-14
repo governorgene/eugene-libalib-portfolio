@@ -83,24 +83,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
 })();
 
 // ===== Expertise card → filter Work =====
+// Each card's title is a real link to #work, which handles the scroll and the keyboard.
+// This only applies the matching filter on the way there.
 (function initExpertiseToWorkLink() {
-  document.querySelectorAll('.card[data-role]').forEach((card) => {
-    card.setAttribute('role', 'link');
-    card.setAttribute('tabindex', '0');
-
-    const activate = () => {
-      const role = card.dataset.role;
-      const chip = document.querySelector(`.chip[data-filter="${role}"]`);
-      if (chip) chip.click();
-      document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-    };
-
-    card.addEventListener('click', activate);
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
+  document.querySelectorAll('.card[data-role] .card__link').forEach((link) => {
+    link.addEventListener('click', () => {
+      const role = link.closest('.card').dataset.role;
+      document.querySelector(`.chip[data-filter="${role}"]`)?.click();
     });
   });
 })();

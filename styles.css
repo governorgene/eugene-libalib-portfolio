@@ -6,7 +6,7 @@
   --border-strong: rgba(255, 255, 255, 0.18);
   --text: #f5f0eb;
   --text-muted: #9a9087;
-  --text-dim: #5a5550;
+  --text-dim: #877e76; /* 4.6:1 on --bg-card, the WCAG AA floor for small text. Darker fails. */
   --text-faint: #38342f;
   --accent: #00e5ff;
   --accent-dim: rgba(0, 229, 255, 0.12);
@@ -630,6 +630,7 @@ body.menu-open { overflow: hidden; }
 
 /* ============ EXPERTISE CARDS ============ */
 .card {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -670,6 +671,22 @@ body.menu-open { overflow: hidden; }
   font-weight: 700;
   margin: 0 0 0.5rem;
   letter-spacing: -0.005em;
+}
+/* The title link stretches over the whole card, so the card stays one click target
+   while screen readers name the link by its title alone. The z-index lifts it above
+   the skill items, which are positioned for their bullets. */
+.card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+}
+.card__link:hover { opacity: 1; }
+.card__link:focus-visible { outline: none; }
+.card__link:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 .card__body {
   color: var(--text-muted);

@@ -39,7 +39,7 @@
 
   <!-- MENU OVERLAY -->
   <div class="menu-backdrop" id="menu-backdrop" aria-hidden="true"></div>
-  <aside class="menu" id="menu-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navigation">
+  <div class="menu" id="menu-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navigation">
     <div class="menu__header">
       <a href="#top" class="nav__brand menu__brand" data-menu-link aria-label="Home">
         <img src="assets/ECL Logo.png" alt="" class="nav__mark" aria-hidden="true" />
@@ -50,7 +50,7 @@
       </button>
     </div>
 
-    <p class="menu__section-label">NAVIGATE <span class="slashes">/</span> <span id="menu-counter">00</span></p>
+    <p class="menu__section-label">NAVIGATE <span class="slashes" aria-hidden="true">/</span> <span id="menu-counter">00</span></p>
 
     <nav class="menu__nav" aria-label="Primary">
       <a href="#top" class="menu__link" data-menu-link data-section="home">
@@ -105,7 +105,7 @@
         </a>
       </div>
     </div>
-  </aside>
+  </div>
 
   <main id="top">
     <!-- HERO -->
@@ -168,7 +168,7 @@
     <!-- 01 / ABOUT -->
     <section id="about" class="section" data-counter="01">
       <header class="section__head">
-        <p class="eyebrow">01 / 05 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">01 / 05 <span class="slashes" aria-hidden="true">/////////</span></p>
         <p class="section__kicker">* WHO I AM</p>
         <h2 class="section__title">ABOUT</h2>
       </header>
@@ -203,7 +203,7 @@
     <!-- 02 / EXPERTISE -->
     <section id="expertise" class="section" data-counter="02">
       <header class="section__head">
-        <p class="eyebrow">02 / 05 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">02 / 05 <span class="slashes" aria-hidden="true">/////////</span></p>
         <p class="section__kicker">* FIVE DISCIPLINES</p>
         <h2 class="section__title">EXPERTISE</h2>
         <p class="section__lede">One operator, five complementary disciplines, built from a decade of hands-on work in support, dev, and automation.</p>
@@ -215,7 +215,7 @@
             <span class="card__num">01</span>
             <span class="card__open" aria-hidden="true">↗</span>
           </div>
-          <h3 class="card__title">GoHighLevel Specialist</h3>
+          <h3 class="card__title"><a class="card__link" href="#work">GoHighLevel Specialist</a></h3>
           <p class="card__body">End-to-end CRM administration across multi-client agency sub-accounts.</p>
           <ul class="card__skills">
             <li>CRM administration</li>
@@ -231,7 +231,7 @@
             <span class="card__num">02</span>
             <span class="card__open" aria-hidden="true">↗</span>
           </div>
-          <h3 class="card__title">Marketing Automation</h3>
+          <h3 class="card__title"><a class="card__link" href="#work">Marketing Automation</a></h3>
           <p class="card__body">Funnels, sequences, and conversion plumbing that turn lead chaos into measurable revenue.</p>
           <ul class="card__skills">
             <li>High-converting funnels</li>
@@ -247,7 +247,7 @@
             <span class="card__num">03</span>
             <span class="card__open" aria-hidden="true">↗</span>
           </div>
-          <h3 class="card__title">Front-End Developer</h3>
+          <h3 class="card__title"><a class="card__link" href="#work">Front-End Developer</a></h3>
           <p class="card__body">Pixel-accurate, cross-browser front-end and custom landing pages, from design to live deploy.</p>
           <ul class="card__skills">
             <li>HTML, CSS, JavaScript</li>
@@ -263,7 +263,7 @@
             <span class="card__num">04</span>
             <span class="card__open" aria-hidden="true">↗</span>
           </div>
-          <h3 class="card__title">AI Integration</h3>
+          <h3 class="card__title"><a class="card__link" href="#work">AI Integration</a></h3>
           <p class="card__body">AI voice agents in GoHighLevel, a Claude Code engineering setup, and Node.js middleware that put intelligence inside the funnel.</p>
           <ul class="card__skills">
             <li>Claude Code</li>
@@ -279,7 +279,7 @@
             <span class="card__num">05</span>
             <span class="card__open" aria-hidden="true">↗</span>
           </div>
-          <h3 class="card__title">Network Ops &amp; Support</h3>
+          <h3 class="card__title"><a class="card__link" href="#work">Network Ops &amp; Support</a></h3>
           <p class="card__body">NOC-grade monitoring, hardware troubleshooting, and Tier-1-through-3 escalation experience.</p>
           <ul class="card__skills">
             <li>24/7 network monitoring</li>
@@ -295,7 +295,7 @@
     <!-- 03 / CASE STUDIES -->
     <section id="case-studies" class="section" data-counter="03">
       <header class="section__head">
-        <p class="eyebrow">03 / 05 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">03 / 05 <span class="slashes" aria-hidden="true">/////////</span></p>
         <p class="section__kicker">* PROOF OF WORK</p>
         <h2 class="section__title">CASE STUDIES</h2>
         <p class="section__lede">Work from live client accounts: a CRM rebuild, custom landing pages, follow-up campaigns, and an AI phone receptionist. Client names and contact data are kept private.</p>
@@ -436,7 +436,7 @@
     <!-- 04 / EXPERIENCE -->
     <section id="work" class="section" data-counter="04">
       <header class="section__head">
-        <p class="eyebrow">04 / 05 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">04 / 05 <span class="slashes" aria-hidden="true">/////////</span></p>
         <p class="section__kicker">* BUILT TO SHIP</p>
         <h2 class="section__title">SELECTED EXPERIENCE</h2>
         <p class="section__lede">Filter by discipline.</p>
@@ -522,7 +522,7 @@
     <!-- 05 / CONTACT -->
     <section id="contact" class="section section--contact" data-counter="05">
       <header class="section__head section__head--centered">
-        <p class="eyebrow">05 / 05 <span class="slashes">/////////</span></p>
+        <p class="eyebrow">05 / 05 <span class="slashes" aria-hidden="true">/////////</span></p>
         <p class="section__kicker">* TRANSMISSION</p>
         <h2 class="section__title">LET'S BUILD</h2>
         <p class="section__lede">
