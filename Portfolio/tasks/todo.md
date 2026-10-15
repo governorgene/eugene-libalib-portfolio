@@ -11,7 +11,7 @@ Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX
 - [x] Gate on `X:\Master\index.html`: WARN, no FAIL, 0 console errors, 320 to 1440px. The same 4 contrast WARNs (case-panel labels) and 10 copy WARNs (six `TODO(Gene)`, and the spaced hyphen in the title, description and social titles, an open owner's call). Slices looked at: 375px-01, 375px-04, 1440px-01 and 1440px-03. Layout unchanged, as expected from changes to interaction states only.
 - [ ] Needs from Gene: a tap test on a real phone. Emulation reproduced the sticky hover and its fix, but not iOS Safari's own `:active` handling, tap delay or the status-bar colour. Tap a case card (no accent border should stay behind), press the buttons (they should shrink slightly while held), and check the status bar matches the nav.
 - [ ] Owner's call, not changed: `.project` and `.case` cards lift on hover like links but are not clickable (only Case 01's video panel is). With the lift working again this shows on desktop. Keep it, or keep only the border.
-- [ ] Owner's call: not committed or pushed. A push to `main` is the deploy.
+- [x] ~~Owner's call: not committed or pushed. A push to `main` is the deploy.~~ Resolved 2026-10-15: committed as `4ef04b6` (the three site files and this entry only) and pushed. Pages build `built 4ef04b6` (47 s). The live page, `styles.css` and `script.js` return 200 and match the commit byte for byte (SHA256). On the live URL: probe PASS, hover lift -2px, press 0.97, 0.99 and 0.95, a tap on a phone leaves no hover style, and the gate reports WARN with no FAIL (the same 4 contrast and 10 copy WARNs).
 
 ## 2026-10-14 · Accessibility fixes from an axe-core scan
 
