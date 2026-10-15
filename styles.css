@@ -820,14 +820,14 @@ body.menu-open { overflow: hidden; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color .2s ease, box-shadow .2s ease, transform .2s var(--ease-out), var(--reveal-transition);
+  transition: border-color .2s ease, box-shadow .2s ease, var(--reveal-transition);
   display: flex;
   flex-direction: column;
 }
+/* Border only, no lift: a project card is not a link, and a lift reads as clickable. */
 @media (hover: hover) and (pointer: fine) {
   .project:hover {
     border-color: var(--accent);
-    transform: translateY(-2px);
     box-shadow: 0 0 0 1px var(--accent-dim);
   }
 }
@@ -901,12 +901,12 @@ body.menu-open { overflow: hidden; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color .2s ease, box-shadow .2s ease, transform .2s var(--ease-out), var(--reveal-transition);
+  transition: border-color .2s ease, box-shadow .2s ease, var(--reveal-transition);
 }
+/* Border only, no lift: a case card is not a link (only Case 01's video panel is). */
 @media (hover: hover) and (pointer: fine) {
   .case:hover {
     border-color: var(--accent);
-    transform: translateY(-2px);
     box-shadow: 0 0 0 1px var(--accent-dim);
   }
 }
