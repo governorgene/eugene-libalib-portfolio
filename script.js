@@ -1,6 +1,11 @@
 // ===== Footer year =====
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// ===== Touch press states =====
+// iOS Safari has long applied :active on touch only when a touchstart listener exists.
+// An empty passive listener is enough, and a passive one never holds up scrolling.
+document.addEventListener('touchstart', () => {}, { passive: true });
+
 // ===== Hero role rotator =====
 (function initRoleRotator() {
   const roles = [

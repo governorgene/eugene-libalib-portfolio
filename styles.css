@@ -18,12 +18,17 @@
   --pad: clamp(1.25rem, 4vw, 2.5rem);
   --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* strong ease-out: press feedback lands at once */
+  --reveal-transition: opacity .6s ease, translate .6s ease;
 }
 
 * { box-sizing: border-box; }
 *::selection { background: var(--accent); color: var(--on-accent); }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent; /* every control has its own :active state instead */
+}
 
 body {
   margin: 0;
@@ -40,7 +45,18 @@ body {
 }
 
 a { color: inherit; text-decoration: none; transition: opacity .15s ease; }
-a:hover { opacity: .7; }
+
+/* Hover styles sit behind (hover: hover) and (pointer: fine) throughout this file. A phone
+   applies :hover on tap and keeps it until the next tap somewhere else, so an ungated hover
+   sticks. Touch gets its feedback from :active instead. */
+@media (hover: hover) and (pointer: fine) {
+  a:hover { opacity: .7; }
+}
+
+/* Controls answer a tap at once instead of waiting to rule out a double-tap zoom, and a
+   long press on a button doesn't select its label. Pinch zoom still works. */
+a, button { touch-action: manipulation; }
+button { -webkit-user-select: none; user-select: none; }
 
 img { max-width: 100%; display: block; }
 
@@ -84,6 +100,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.05em;
   color: var(--text);
 }
+.nav__brand:active { opacity: .7; }
 .nav__mark {
   width: 28px;
   height: 28px;
@@ -112,6 +129,7 @@ img { max-width: 100%; display: block; }
   gap: 4px;
   cursor: pointer;
   padding: 0;
+  transition: border-color .15s ease, background-color .15s ease, transform .16s var(--ease-out);
 }
 .nav__menu span {
   display: block;
@@ -119,7 +137,10 @@ img { max-width: 100%; display: block; }
   height: 1px;
   background: var(--text);
 }
-.nav__menu:hover { border-color: var(--accent); }
+@media (hover: hover) and (pointer: fine) {
+  .nav__menu:hover { border-color: var(--accent); }
+}
+.nav__menu:active { transform: scale(0.95); }
 .nav__menu[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); }
 .nav__menu[aria-expanded="true"] span { background: var(--on-accent); }
 
@@ -189,6 +210,7 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
   position: relative;
   padding: 0;
+  transition: opacity .15s ease, transform .16s var(--ease-out);
 }
 .menu__close span {
   position: absolute;
@@ -198,7 +220,10 @@ img { max-width: 100%; display: block; }
 }
 .menu__close span:first-child { transform: rotate(45deg); }
 .menu__close span:last-child { transform: rotate(-45deg); }
-.menu__close:hover { opacity: .8; }
+@media (hover: hover) and (pointer: fine) {
+  .menu__close:hover { opacity: .8; }
+}
+.menu__close:active { transform: scale(0.95); }
 
 .menu__section-label {
   font-family: var(--font-mono);
@@ -225,12 +250,11 @@ img { max-width: 100%; display: block; }
   padding: 1.4rem 0.25rem;
   border-bottom: 1px solid var(--border);
   color: var(--text);
-  transition: padding .2s ease;
 }
-.menu__link:hover {
-  opacity: 1;
-  padding-left: 0.75rem;
-}
+/* On hover the number and label slide right with a transform, not a padding change, so the
+   row never re-lays out mid-animation. The dot stays put, as it did with the padding. */
+.menu__num,
+.menu__label { transition: transform .2s ease; }
 .menu__num {
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -257,7 +281,13 @@ img { max-width: 100%; display: block; }
 .menu__link.is-active .menu__num { color: var(--accent); }
 .menu__link.is-active .menu__dot { opacity: 1; }
 .menu__link:not(.is-active) .menu__label { color: var(--text-muted); }
-.menu__link:hover .menu__label { color: var(--text); }
+@media (hover: hover) and (pointer: fine) {
+  .menu__link:hover { opacity: 1; }
+  .menu__link:hover .menu__num,
+  .menu__link:hover .menu__label { transform: translateX(0.5rem); }
+  .menu__link:hover .menu__label { color: var(--text); }
+}
+.menu__link:active .menu__label { color: var(--text); }
 
 .menu__connect {
   margin-top: auto;
@@ -278,18 +308,21 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text-muted);
-  transition: all .15s ease;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease, transform .16s var(--ease-out);
 }
 .menu__social svg {
   width: 16px;
   height: 16px;
 }
-.menu__social:hover {
-  opacity: 1;
-  background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--accent);
+@media (hover: hover) and (pointer: fine) {
+  .menu__social:hover {
+    opacity: 1;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-color: var(--accent);
+  }
 }
+.menu__social:active { transform: scale(0.95); }
 
 body.menu-open { overflow: hidden; }
 
@@ -365,19 +398,20 @@ body.menu-open { overflow: hidden; }
   text-transform: uppercase;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all .2s ease;
+  transition:
+    background-color .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease,
+    text-decoration-color .2s ease,
+    transform .16s var(--ease-out);
 }
+.btn:active { transform: scale(0.97); }
 .btn--primary {
   background: var(--accent);
   color: var(--on-accent);
   border-color: var(--accent);
   box-shadow: 0 0 0 0 var(--accent-glow);
-}
-.btn--primary:hover {
-  opacity: 1;
-  background: transparent;
-  color: var(--accent);
-  box-shadow: 0 0 24px var(--accent-glow);
 }
 .btn__icon {
   display: inline-block;
@@ -394,9 +428,7 @@ body.menu-open { overflow: hidden; }
   text-decoration-color: transparent;
   text-underline-offset: 0.4em;
 }
-.btn--link:hover,
 .btn--link:focus-visible {
-  opacity: 1;
   color: var(--accent);
   text-decoration-color: currentColor;
 }
@@ -404,10 +436,25 @@ body.menu-open { overflow: hidden; }
   display: inline-block;
   transition: transform .2s ease;
 }
-.btn--link:hover .btn__arrow,
 .btn--link:focus-visible .btn__arrow { transform: translateX(3px); }
-.btn--link:hover .btn__arrow--down,
 .btn--link:focus-visible .btn__arrow--down { transform: translateY(3px); }
+
+/* The keyboard focus styles above stay ungated: they must work on touch devices too. */
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover {
+    opacity: 1;
+    background: transparent;
+    color: var(--accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+  .btn--link:hover {
+    opacity: 1;
+    color: var(--accent);
+    text-decoration-color: currentColor;
+  }
+  .btn--link:hover .btn__arrow { transform: translateX(3px); }
+  .btn--link:hover .btn__arrow--down { transform: translateY(3px); }
+}
 
 /* ============ QUICK NAV ============ */
 .quicknav {
@@ -431,8 +478,14 @@ body.menu-open { overflow: hidden; }
   transition: background .15s ease, color .15s ease;
 }
 .quicknav__card:last-child { border-right: none; }
-.quicknav__card:hover {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .quicknav__card:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+  }
+}
+.quicknav__card:active {
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
 }
@@ -587,8 +640,10 @@ body.menu-open { overflow: hidden; }
   filter: saturate(0.95) contrast(1.02);
   transition: transform 0.5s ease;
 }
-.about__photo-frame:hover img {
-  transform: scale(1.05);
+@media (hover: hover) and (pointer: fine) {
+  .about__photo-frame:hover img {
+    transform: scale(1.05);
+  }
 }
 .about__caption {
   display: flex;
@@ -636,15 +691,14 @@ body.menu-open { overflow: hidden; }
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   cursor: pointer;
-  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  transition:
+    border-color .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease,
+    transform .2s var(--ease-out),
+    var(--reveal-transition);
   display: flex;
   flex-direction: column;
-}
-.card:hover {
-  border-color: var(--accent);
-  background: #111;
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--accent-dim);
 }
 .card__head {
   display: flex;
@@ -665,7 +719,6 @@ body.menu-open { overflow: hidden; }
   font-size: 0.85rem;
   transition: color .2s ease, transform .2s ease;
 }
-.card:hover .card__open { color: var(--accent); transform: translate(2px, -2px); }
 .card__title {
   font-size: 1.05rem;
   font-weight: 700;
@@ -682,7 +735,18 @@ body.menu-open { overflow: hidden; }
   z-index: 1;
   border-radius: var(--radius-lg);
 }
-.card__link:hover { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: var(--accent);
+    background: #111;
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px var(--accent-dim);
+  }
+  .card:hover .card__open { color: var(--accent); transform: translate(2px, -2px); }
+  .card__link:hover { opacity: 1; }
+}
+/* Pressing anywhere on the card presses its stretched title link, and :active reaches the card. */
+.card:active { transform: scale(0.99); }
 .card__link:focus-visible { outline: none; }
 .card__link:focus-visible::after {
   outline: 2px solid var(--accent);
@@ -734,12 +798,15 @@ body.menu-open { overflow: hidden; }
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all .15s ease;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease, transform .16s var(--ease-out);
 }
-.chip:hover {
-  color: var(--text);
-  border-color: var(--border-strong);
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
 }
+.chip:active { transform: scale(0.97); }
 .chip.is-active {
   background: var(--accent);
   color: var(--on-accent);
@@ -753,14 +820,16 @@ body.menu-open { overflow: hidden; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color .2s ease, transform .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s var(--ease-out), var(--reveal-transition);
   display: flex;
   flex-direction: column;
 }
-.project:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--accent-dim);
+@media (hover: hover) and (pointer: fine) {
+  .project:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px var(--accent-dim);
+  }
 }
 .project.is-hidden { display: none; }
 .project__thumb {
@@ -832,12 +901,14 @@ body.menu-open { overflow: hidden; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color .2s ease, transform .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s var(--ease-out), var(--reveal-transition);
 }
-.case:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--accent-dim);
+@media (hover: hover) and (pointer: fine) {
+  .case:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px var(--accent-dim);
+  }
 }
 .case__media {
   position: relative;
@@ -893,19 +964,22 @@ body.menu-open { overflow: hidden; }
   border: 1px solid var(--accent);
   border-radius: 50%;
   color: var(--accent);
-  transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .16s var(--ease-out);
 }
 .case__play svg {
   width: 24px;
   height: 24px;
   margin-left: 3px;
 }
-.case__media--video:hover { opacity: 1; }
-.case__media--video:hover .case__play {
-  background: var(--accent);
-  color: var(--on-accent);
-  box-shadow: 0 0 24px var(--accent-glow);
+@media (hover: hover) and (pointer: fine) {
+  .case__media--video:hover { opacity: 1; }
+  .case__media--video:hover .case__play {
+    background: var(--accent);
+    color: var(--on-accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
 }
+.case__media--video:active .case__play { transform: scale(0.95); }
 .case__body { padding: clamp(1.25rem, 3vw, 2rem); }
 .case__meta {
   font-family: var(--font-mono);
@@ -983,7 +1057,10 @@ body.menu-open { overflow: hidden; }
   letter-spacing: 0.05em;
   color: var(--text-muted);
 }
-.contact__socials a:hover { color: var(--text); opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .contact__socials a:hover { color: var(--text); opacity: 1; }
+}
+.contact__socials a:active { color: var(--text); }
 .dot { color: var(--text-faint); }
 
 /* ============ FOOTER ============ */
@@ -1021,17 +1098,20 @@ body.menu-open { overflow: hidden; }
   height: 32px;
   border-radius: var(--radius);
   color: var(--text-muted);
-  transition: all .15s ease;
+  transition: background-color .15s ease, color .15s ease, transform .16s var(--ease-out);
 }
 .footer__social svg {
   width: 15px;
   height: 15px;
 }
-.footer__social:hover {
-  opacity: 1;
-  color: var(--accent);
-  background: var(--accent-dim);
+@media (hover: hover) and (pointer: fine) {
+  .footer__social:hover {
+    opacity: 1;
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
 }
+.footer__social:active { transform: scale(0.95); }
 
 @media (max-width: 600px) {
   .footer { grid-template-columns: 1fr; text-align: center; }
@@ -1039,15 +1119,21 @@ body.menu-open { overflow: hidden; }
 }
 
 /* ============ SCROLL REVEAL ============ */
+/* The reveal moves elements with the `translate` property, not `transform`. When it used
+   `transform`, .reveal.is-visible came later than .card:hover at the same specificity and
+   pinned the cards at translateY(0), so their hover lift never showed, and its transition
+   list replaced theirs. Now the two never touch the same property. The transition sits
+   in :where() at zero specificity: .card, .project and .case add var(--reveal-transition)
+   to their own list, and every other revealed element falls back to this one. */
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity .6s ease, transform .6s ease;
+  translate: 0 20px;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  translate: none;
 }
+:where(.reveal) { transition: var(--reveal-transition); }
 
 /* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion: reduce) {
@@ -1057,5 +1143,5 @@ body.menu-open { overflow: hidden; }
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { opacity: 1; translate: none; }
 }
