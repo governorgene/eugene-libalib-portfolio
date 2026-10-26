@@ -2,6 +2,17 @@
 
 Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
 
+## 2026-10-26 · New logo (Caret) swapped in for review
+
+- [x] Owner's choice: concept 03 "Caret" of three ECL monogram concepts drawn this day. A geometric lowercase e and c (radius 15, stroke 8 on a 120 grid, both apertures cut at 45 degrees) and an l drawn as a cyan text cursor, in the site's own tokens (`#0b0b0f`, `#f5f0eb`, `#00e5ff`). Sources live outside the repo in `X:\Content\brand\ecl-logo\`.
+- [x] `assets/ecl-glyph.svg` (sha256 `5444b75b37cf`) replaces `ECL Logo.png` in the nav, the menu header and the footer. Its viewBox is square and cropped to the glyphs, so it fills the 28px `.nav__mark` slot with no CSS change. Measured in Chrome: all three load 28px wide, 0 console errors. The open menu at 375px and the footer at 1440px were screenshotted and looked at.
+- [x] Favicons are PNG only: `favicon-32.png` (`b442cfd69a7f`), `favicon-16.png` (`946844af6423`) and `apple-touch-icon.png` 180px opaque (`96c54275669c`). An SVG favicon was left out on purpose: Chrome prefers it and the vector e and c smear into blobs at 16px. The 16px file is drawn by hand on the pixel grid and was checked enlarged 16x on dark and light.
+- [x] `og-image.jpg` 1200x630, 70 KB (`b1958388ccda`): the new mark, the name in Anton and the role line, beside the existing portrait. Both `og:image` and `twitter:image` point to it. `graphtag.jpg` is kept, no longer referenced.
+- [x] Gate on `X:\Master\index.html`: WARN, no FAIL, 320 to 1440px, light and dark. The same 10 copy WARNs as before. One touch and motion WARN lists 12 controls without a press state, although `styles.css` has `:active` rules for `.btn`, `.chip` and `.nav__menu` (lines 409, 809, 143), so it reads as a gate false positive and predates this change. Slices looked at: 1440px-01 and 375px-01.
+- [x] ~~Owner's call: approve the logo, nav, favicons and share image, then commit and push. A push to `main` is the deploy. The 2026-10-16 ripple in `script.js` and `styles.css` is still uncommitted too, so commit the two apart unless both are approved.~~ Resolved 2026-10-26: approved by the owner. Committed on its own, built from `HEAD` in a temporary index, so the ripple and the staged `CLAUDE.md` move stay uncommitted.
+- [ ] Owner's call: the menu header reads "ec| ECL", the new mark beside the old text. Keep it, or change the text.
+- [ ] After a deploy, social sites keep the old preview cached. Refresh it in the Facebook Sharing Debugger and the LinkedIn Post Inspector.
+
 ## 2026-10-15 · Touch and motion fixes
 
 - [x] Source: the owner asked for an analysis of Emil Kowalski's public UI skills (`emilkowalski/skills`), and the rules of its `mobile-native` and `emil-design-eng` skills were applied to `styles.css`. A probe that walks the live CSSOM over HTTP found 22 `:hover` rules outside a hover media query, 4 `transition: all`, 1 `padding` transition, no `:active` style anywhere and no `theme-color` meta. Chrome blocks CSSOM reads over `file://`, so the probe reports a blocked stylesheet as FAIL instead of passing empty.
