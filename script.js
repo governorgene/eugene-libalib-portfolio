@@ -7,29 +7,36 @@ document.getElementById('year').textContent = new Date().getFullYear();
 document.addEventListener('touchstart', () => {}, { passive: true });
 
 // ===== Hero role rotator =====
+// Each role carries its own article ("an AI Integrator"), swapped while the word is hidden.
 (function initRoleRotator() {
   const roles = [
-    'GoHighLevel Specialist',
-    'Marketing Automation Architect',
-    'Web Developer',
-    'AI Integrator',
-    'Network Operations Engineer',
+    ['a', 'GoHighLevel Specialist'],
+    ['a', 'Marketing Automation Architect'],
+    ['a', 'Web Developer'],
+    ['an', 'AI Integrator'],
+    ['a', 'Network Operations Engineer'],
   ];
   const el = document.querySelector('.role-rotator__word');
+  const article = document.querySelector('.role-rotator__article');
   if (!el) return;
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let i = 0;
+  const show = () => {
+    const [a, role] = roles[i];
+    el.textContent = role;
+    if (article) article.textContent = a;
+  };
 
   setInterval(() => {
     i = (i + 1) % roles.length;
     if (reduced) {
-      el.textContent = roles[i];
+      show();
       return;
     }
     el.classList.add('is-leaving');
     setTimeout(() => {
-      el.textContent = roles[i];
+      show();
       el.classList.remove('is-leaving');
       el.classList.add('is-entering');
       requestAnimationFrame(() => el.classList.remove('is-entering'));
