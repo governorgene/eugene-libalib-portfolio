@@ -217,3 +217,157 @@ document.addEventListener('touchstart', () => {}, { passive: true });
 
   sections.forEach((s) => io.observe(s));
 })();
+
+// ===== Background ripple =====
+// A faint dot grid sits on a fixed canvas behind the whole page. A click or tap on the
+// background sends a ring out through it: dots are pushed outward and light up in the accent colour as
+// the front passes, then settle back. The grid only redraws while a ripple is alive.
+// Reduced motion keeps the static grid and never ripples.
+(function initBackgroundRipple() {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  canvas.className = 'ripple-field';
+  canvas.setAttribute('aria-hidden', 'true');
+  document.body.append(canvas);
+
+  const SPACING = 22;      // grid pitch, CSS px
+  const DOT = 1;           // dot radius at rest
+  const REST_ALPHA = 0.05; // above ~0.05 a dot pixel takes --text-dim below 4.5:1. 0 hides the grid
+  const TRAVEL = 1.1;      // seconds for the front to reach its full radius
+  const LIFE = 1.4;        // seconds until a ripple has faded out
+  const REACH = 180;       // px the front travels
+  const BAND = 26;         // px width of the front
+  const PUSH = 14;         // px a dot is pushed outward on the crest
+  const MAX_RIPPLES = 5;
+  const DRAG_PX = 6;       // a drag or a text selection is not a click
+  const CONTROLS = 'a, button, input, textarea, select, summary, label, [role="button"]';
+
+  const css = getComputedStyle(document.documentElement);
+  const rgb = (hex) => {
+    const n = parseInt(hex.trim().replace('#', ''), 16);
+    return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
+  };
+  const ink = rgb(css.getPropertyValue('--text') || '#f5f0eb');
+  const glow = rgb(css.getPropertyValue('--accent') || '#00e5ff');
+  const easeOut = (t) => 1 - (1 - t) ** 3;
+
+  let width = 0;
+  let height = 0;
+  let ratio = 0;
+  let ripples = [];
+  let frame = 0;
+
+  function draw(now) {
+    ripples = ripples.filter((r) => now - r.start < LIFE);
+    ctx.clearRect(0, 0, width, height);
+
+    // Resting dots go into one path. Dots the wave is touching are drawn after it, one by one.
+    const lit = [];
+    ctx.fillStyle = `rgba(${ink}, ${REST_ALPHA})`;
+    ctx.beginPath();
+    for (let y = SPACING / 2; y < height; y += SPACING) {
+      for (let x = SPACING / 2; x < width; x += SPACING) {
+        let dx = 0;
+        let dy = 0;
+        let hit = 0;
+        for (const r of ripples) {
+          const age = now - r.start;
+          const ox = x - r.x;
+          const oy = y - r.y;
+          const dist = Math.hypot(ox, oy) || 1;
+          const front = easeOut(Math.min(age / TRAVEL, 1)) * REACH;
+          const k = Math.exp(-(((dist - front) / BAND) ** 2)) * (1 - age / LIFE);
+          if (k < 0.01) continue;
+          dx += (ox / dist) * k * PUSH;
+          dy += (oy / dist) * k * PUSH;
+          hit = Math.max(hit, k);
+        }
+        if (hit) {
+          lit.push([x + dx, y + dy, Math.min(1, hit * 1.5)]);
+        } else {
+          ctx.moveTo(x + DOT, y);
+          ctx.arc(x, y, DOT, 0, Math.PI * 2);
+        }
+      }
+    }
+    ctx.fill();
+
+    for (const [x, y, k] of lit) {
+      ctx.fillStyle = `rgba(${glow}, ${REST_ALPHA + k * 0.85})`;
+      ctx.beginPath();
+      ctx.arc(x, y, DOT * (1 + k * 0.8), 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // A faint ring marks the front until it stops travelling.
+    ctx.lineWidth = 1;
+    for (const r of ripples) {
+      const t = (now - r.start) / TRAVEL;
+      if (t >= 1) continue;
+      ctx.strokeStyle = `rgba(${glow}, ${0.3 * (1 - t)})`;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, easeOut(t) * REACH, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+
+  function tick() {
+    draw(performance.now() / 1000);
+    frame = ripples.length ? requestAnimationFrame(tick) : 0;
+  }
+
+  // The canvas is 100lvh tall, so a phone's address bar sliding away doesn't change its size.
+  // Skip the redraw when nothing changed, since some phones fire resize on every scroll.
+  function resize() {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    const r = Math.min(window.devicePixelRatio || 1, 2);
+    if (w === width && h === height && r === ratio) return;
+    width = w;
+    height = h;
+    ratio = r;
+    canvas.width = Math.round(w * r);
+    canvas.height = Math.round(h * r);
+    ctx.setTransform(r, 0, 0, r, 0, 0);
+    draw(performance.now() / 1000);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Only clicks that land where the background shows: not on a control, not on an image,
+  // and not on an opaque card, panel or the nav bar.
+  const onBackground = (el) => {
+    if (!el || el.closest(CONTROLS)) return false;
+    for (let node = el; node && node !== document.body; node = node.parentElement) {
+      if (/^(img|svg|video|canvas|iframe)$/i.test(node.tagName)) return false;
+      const channels = getComputedStyle(node).backgroundColor.match(/[\d.]+/g);
+      const alpha = !channels ? 0 : channels.length > 3 ? +channels[3] : 1;
+      if (alpha >= 0.5) return false;
+    }
+    return true;
+  };
+
+  // Pointer events rather than click: iOS Safari doesn't pass a tap on plain text or empty space
+  // up to the document as a click. A scroll ends in pointercancel, not pointerup, so it never
+  // ripples, and the keyboard never sends pointer events at all.
+  let downAt = null;
+  document.addEventListener('pointerdown', (e) => {
+    downAt = e.isPrimary && e.button === 0 ? { x: e.clientX, y: e.clientY } : null;
+  }, { passive: true });
+
+  document.addEventListener('pointerup', (e) => {
+    const start = downAt;
+    downAt = null;
+    if (!start || Math.hypot(e.clientX - start.x, e.clientY - start.y) > DRAG_PX) return;
+    if (document.body.classList.contains('menu-open')) return;
+    if (!window.getSelection().isCollapsed) return; // a double-click that selected a word
+    if (!onBackground(e.target)) return;
+
+    if (ripples.length >= MAX_RIPPLES) ripples.shift();
+    ripples.push({ x: e.clientX, y: e.clientY, start: performance.now() / 1000 });
+    if (!frame) frame = requestAnimationFrame(tick);
+  }, { passive: true });
+})();

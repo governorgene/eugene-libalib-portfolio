@@ -2,13 +2,13 @@
 
 Patterns learned from user corrections. One entry per lesson. Review at session start.
 
-Format:
+Format (title each entry with the rule itself, not a date):
 
 ```
-## YYYY-MM-DD — short title
-**Trigger:** what I did that caused the correction.
-**Rule:** what to do differently next time.
+## The rule, stated as an instruction
+**Trigger (YYYY-MM-DD):** what I did that caused the correction.
 **Why:** the reason this matters here.
+**How to apply:** what to do the next time this comes up.
 ```
 
 ---

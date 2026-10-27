@@ -1,6 +1,6 @@
 # Todo — Portfolio v1
 
-Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.
+~~Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.~~ Corrected 2026-10-12: the disciplines were replaced by CV-backed ones in v3, and the site is now public on GitHub Pages (built from `main`). Still a single page, no build step, no framework. `CLAUDE.md` at the repo root describes the current setup.
 
 ## 2026-10-26 · New logo (Caret) swapped in for review
 
@@ -14,6 +14,17 @@ Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX
 - [ ] Owner's call: the menu header reads "ec| ECL", the new mark beside the old text. Keep it, or change the text.
 - [ ] After a deploy, social sites keep the old preview cached. Refresh it in the Facebook Sharing Debugger and the LinkedIn Post Inspector.
 
+## 2026-10-16 · Background click ripple
+
+- [x] Owner's request: a ripple through the page background on click, after one he liked on another site. That site's engine was read to learn the mechanics (a dot grid on a canvas, a ring wave pushing dots outward and lighting them), then this version was written from scratch in `script.js`, with no code copied.
+- [x] `script.js` adds a fixed, `aria-hidden` canvas behind the page (`.ripple-field` in `styles.css`, `z-index: -1`, `100lvh`, hidden in print). It draws a 22px dot grid in `--text`. A click or tap on the background sends a ring out 180px over 1.1 s, pushing dots up to 14px outward and lighting them in `--accent`, with a faint ring at the front. The canvas redraws only while a ripple is alive, up to 5 at once. It fires on pointer events rather than `click`, because iOS Safari doesn't pass a tap on plain text or empty space up to the document as a click. No ripple for links, buttons, images, opaque cards and panels, the nav bar, the open menu, drags over 6px, right clicks or the keyboard. Reduced motion keeps the static grid and never ripples.
+- [x] Contrast: every text run on the page background measured at least 4.94:1 against `--bg`, but at a first try of 8% opacity a dot pixel took `--text-dim` (the quick-nav labels, 8 runs) down to 4.2:1. Lowered to 5%. The brightest rendered dot pixel now gives `--text-dim` 4.63:1, and a fully covered dot pixel on a 2x screen works out to 4.53:1.
+- [x] Verified in Chrome through Playwright CLI 0.1.22, by counting lit pixels on the canvas right after each pointerup. Real mouse at 1440px: blank hero 236, hero text 189, blank space after scrolling 173. A drag, a right click, the hero button, text in a case panel and Enter on a focused link all 0. Real touch tap at 375px (2x): hero text 576, hero button 0, and the link still went to `#work`. Reduced motion: the grid draws (10,660 dot pixels) and a click lights 0. Five ripples at once at 1440px: median frame 6.9 ms, one frame over 20 ms out of 183. After the ripples end the canvas has 0 lit pixels left.
+- [x] Gate on `X:\Master\index.html`: WARN, no FAIL, 0 console errors, no overflow from 320 to 1440px. The same 10 copy WARNs. The 4 case-panel contrast WARNs now come with a fifth: the gate counts the canvas as a picture behind 70 text elements, so it lists them for checking by eye instead of measuring them (the contrast note above covers them). Slices looked at: 375px-01, 1440px-01 and 1440px-04. A full-page capture draws a fixed layer once at the top, so lower slices show no dots.
+- [ ] Needs from Gene: a tap on a real iPhone. The touch test ran in Chrome, not iOS Safari. Tap empty space and text in the hero: a cyan ring should spread. Tapping a button should only follow the link.
+- [ ] Owner's call: the resting grid is faint at 5%. Stronger, like the reference site, takes the dim labels below AA over a dot. `REST_ALPHA` in `script.js` sets it, and 0 hides the grid until a ripple passes.
+- [ ] Owner's call: not committed or pushed. A push to `main` is the deploy.
+
 ## 2026-10-15 · Touch and motion fixes
 
 - [x] Source: the owner asked for an analysis of Emil Kowalski's public UI skills (`emilkowalski/skills`), and the rules of its `mobile-native` and `emil-design-eng` skills were applied to `styles.css`. A probe that walks the live CSSOM over HTTP found 22 `:hover` rules outside a hover media query, 4 `transition: all`, 1 `padding` transition, no `:active` style anywhere and no `theme-color` meta. Chrome blocks CSSOM reads over `file://`, so the probe reports a blocked stylesheet as FAIL instead of passing empty.
@@ -24,6 +35,13 @@ Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX
 - [ ] Needs from Gene: a tap test on a real phone. Emulation reproduced the sticky hover and its fix, but not iOS Safari's own `:active` handling, tap delay or the status-bar colour. Tap a case card (no accent border should stay behind), press the buttons (they should shrink slightly while held), and check the status bar matches the nav.
 - [x] ~~Owner's call, not changed: `.project` and `.case` cards lift on hover like links but are not clickable (only Case 01's video panel is). With the lift working again this shows on desktop. Keep it, or keep only the border.~~ Resolved 2026-10-15: the owner chose border only. `.project:hover` and `.case:hover` no longer lift, their accent border and 1px accent ring stay, and `transform` is gone from their transition lists. Measured on desktop hover: `.project` and `#case-landing` went from -2px to `none` and still turn the accent colour, while `.card`, a real link, still lifts -2px. Press feedback, the touch tap test and the static probe are unchanged, and the gate reports WARN with no FAIL (the same 4 and 10 WARNs). Deployed as `355deba`: Pages build `built 355deba` (71 s), live page 200, live `styles.css` matches the commit (SHA256), the same hover, press and tap results on the live URL, and the live gate reports WARN with no FAIL.
 - [x] ~~Owner's call: not committed or pushed. A push to `main` is the deploy.~~ Resolved 2026-10-15: committed as `4ef04b6` (the three site files and this entry only) and pushed. Pages build `built 4ef04b6` (47 s). The live page, `styles.css` and `script.js` return 200 and match the commit byte for byte (SHA256). On the live URL: probe PASS, hover lift -2px, press 0.97, 0.99 and 0.95, a tap on a phone leaves no hover style, and the gate reports WARN with no FAIL (the same 4 contrast and 10 copy WARNs).
+
+## 2026-10-15 · Site checked with the new pre-delivery gate
+
+- [x] A `pre-delivery-gate` skill now runs the checks from 2026-10-14 in one command: widths 320 to 1440px, overflow, clipped text, click targets, axe-core, an exact contrast scan, console errors, broken assets and in-page links, and a dash scan. Its self-test plants one defect per check on a fixture page and passes 27 of 27 cases. Each check fails only on its own defect.
+- [x] Gate on `X:\Master\index.html` and on the live site: WARN with no FAIL, in 21 s for five widths. The four contrast WARNs are the case-study panel labels on the striped background, which the gate cannot measure; checked by eye in the 1440px slice and readable. The site as it stood at `633a6f2`, before the 2026-10-14 fixes, gates FAIL: 3 contrast colour pairs plus axe color-contrast, the defects fixed by hand that day.
+- [ ] Owner's call: the page title, meta description and social titles read "Eugene Libalib - GoHighLevel Specialist ...", a spaced hyphen used as a dash. The gate warns rather than fails, since separators in titles are a judgment call.
+- [ ] Needs from Gene: the six `TODO(Gene)` placeholders (results rows and blurred screenshots) are still open, as listed by the gate.
 
 ## 2026-10-14 · Accessibility fixes from an axe-core scan
 
@@ -45,6 +63,15 @@ Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX
 - [x] Contact checked at 320, 375, 390, 414, 768, 1024 and 1440px: `scrollWidth` equals the viewport width at every width, 0 console errors, and the link's centre matches the button's centre at every width (720px at 1440). Hover measured as accent colour, underline and the 3px arrow drop. The hero CTA positions at 375 and 1440 are identical to the earlier sweep after the `.btn--ghost` removal. Before and after screenshots looked at for 320, 375 and 1440.
 - [ ] Owner's call, not changed: at 320px the contact line wraps with its `·` separator left hanging after "LinkedIn". This is how it was before today.
 - [x] ~~Owner's call: not committed or pushed. A push to `main` is the deploy.~~ Resolved 2026-10-14: committed as `0520649`, pushed together with `baf7af4`. Pages build `built baf7af4`, live page 200, and the live HTML has the 3 `btn--link` links.
+
+## 2026-10-12 · Project CLAUDE.md rewritten and moved to the repo root
+
+- [x] `Portfolio/CLAUDE.md` was a stub from before any code existed. It said the folder was empty and not a git repo, and it still listed "Minimal Impact" as a principle. It was moved with `git mv` to `CLAUDE.md` at the root, because sessions open at `X:\Master`: the stub was not loaded at session start and only loaded once a file under `Portfolio/` was read. Moved at the owner's choice.
+- [x] Rewritten to describe what exists: layout, no build step, the public-repo exposure and `.git/info/exclude`, content rules, rendered verification, deploy check, CV export, and these journal conventions. Generic workflow rules were dropped because the global instructions already carry them.
+- [x] Every command in it was run before being written down. `playwright-cli` 0.1.22 from a scratch folder with `allowUnrestrictedFileAccess`: `scrollWidth` equals `innerWidth` at 320, 375, 768, 1024 and 1440, 0 console errors. Without the config, `open` fails with `Access to "file:" protocol is blocked`. Both checks failed when tested on purpose: an injected 500px div gave `scrollW` 500 at 375, and an injected `console.error` was reported. `export-pdf.ps1` on the CV, written to the scratchpad: exit 0, font gate PASS (Anton, Poppins), 1 A4 page, repo untouched. `gh api .../pages/builds/latest --jq '{status, commit}'` returned `built` for `633a6f2`, and the live page returned 200.
+- [x] Confirmed: the in-app browser pane shows `file:///X:/Master/index.html` unstyled. Over HTTP, through the `portfolio` launch config, it renders with the site's styles.
+- [x] `lessons.md` template now matches the rule-titled format with a **How to apply:** line.
+- [ ] Owner's call: GitHub Pages serves every tracked file, not just the site. This journal, `CLAUDE.md`, `ECL.psd`, the CV HTML and the root certificate PNGs are all publicly fetchable (HTTP 200 checked on 2026-10-12). Nothing private was found in the journal, but it names a job application. Options: accept it, or keep the journal and CLAUDE.md out of the published tree.
 
 ## 2026-10-12 · Hero name no longer runs off phone screens
 
