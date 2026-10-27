@@ -8,6 +8,8 @@ document.addEventListener('touchstart', () => {}, { passive: true });
 
 // ===== Hero role rotator =====
 // Each role carries its own article ("an AI Integrator"), swapped while the word is hidden.
+// It runs through the roles once and stops back on the first, so a screen reader hears each
+// role once instead of a new one every 2.2 s for as long as the page is open.
 (function initRoleRotator() {
   const roles = [
     ['a', 'GoHighLevel Specialist'],
@@ -28,8 +30,9 @@ document.addEventListener('touchstart', () => {}, { passive: true });
     if (article) article.textContent = a;
   };
 
-  setInterval(() => {
+  const timer = setInterval(() => {
     i = (i + 1) % roles.length;
+    if (i === 0) clearInterval(timer);
     if (reduced) {
       show();
       return;
