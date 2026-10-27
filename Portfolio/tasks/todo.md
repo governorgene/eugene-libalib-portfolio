@@ -2,6 +2,15 @@
 
 ~~Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.~~ Corrected 2026-10-12: the disciplines were replaced by CV-backed ones in v3, and the site is now public on GitHub Pages (built from `main`). Still a single page, no build step, no framework. `CLAUDE.md` at the repo root describes the current setup.
 
+## 2026-10-27 · Ripple and root CLAUDE.md deployed
+
+- [x] Owner's go-ahead: "go ahead and push it first". Committed as `fab9097`: the 2026-10-16 ripple (`script.js`, `styles.css`), the 2026-10-12 move of `CLAUDE.md` to the repo root, the `lessons.md` template and the journal entries from 2026-10-12 to 2026-10-16.
+- [x] Gate before the push, on `X:\Master\index.html` and again over HTTP through the `portfolio` launch config: WARN, no FAIL, 320 to 1440px, 0 console errors. Contrast now passes outright, because the gate reads the ripple canvas pixel by pixel instead of listing 70 text runs to check by eye. The same 10 copy WARNs. The touch and motion WARN depends on how the page is loaded. Over `file://` it is the press-state false positive noted on 2026-10-26: Chrome blocks the gate from reading `styles.css`, and the report lists one blocked stylesheet with an empty name. Over HTTP that WARN is gone and a `theme-color` WARN appears instead, because the gate judged the page to have a dark theme. It has none (no `prefers-color-scheme` rule anywhere), the light and dark 375px first slices differ only in the rotating role word, and the 2026-10-26 run on the same file swept dark while today's did not, so the gate's dark detection varies from run to run on this page. Both read as gate false positives. Slices looked at: 1440px-01, 375px-01 and 375px-dark-01.
+- [x] Deployed: pushed `746db81..fab9097`. Pages build `built` for `fab9097` (equal to `git rev-parse HEAD`) in 37 s. Live page 200. The live `index.html`, `styles.css`, `script.js` and `CLAUDE.md` match the commit (SHA256). The old `Portfolio/CLAUDE.md` now returns 404, and `CLAUDE.md` at the root is public. Gate on the live URL: WARN, no FAIL, the same items as the HTTP run.
+- [x] Ripple on the live URL, Chrome through Playwright CLI 0.1.22 at 1440px, lit pixels on the canvas: 0 before, 873 at 250 ms after a click on the blank hero, 0 once it settled. A click on the hero button lit 0 and still went to `#work`.
+- [ ] Owner's call: the hero reads "I work as a AI Integrator" whenever the rotator reaches that role, live since `46af264`. The "a" is fixed in `index.html` in front of the rotating word. Fix: put the article into each role in `script.js`, or reword the line.
+- [ ] Gate fix, in the `pre-delivery-gate` skill rather than this repo: the two touch and motion false positives above.
+
 ## 2026-10-26 · New logo (Caret) swapped in for review
 
 - [x] Owner's choice: concept 03 "Caret" of three ECL monogram concepts drawn this day. A geometric lowercase e and c (radius 15, stroke 8 on a 120 grid, both apertures cut at 45 degrees) and an l drawn as a cyan text cursor, in the site's own tokens (`#0b0b0f`, `#f5f0eb`, `#00e5ff`). Sources live outside the repo in `X:\Content\brand\ecl-logo\`.
@@ -23,7 +32,7 @@
 - [x] Gate on `X:\Master\index.html`: WARN, no FAIL, 0 console errors, no overflow from 320 to 1440px. The same 10 copy WARNs. The 4 case-panel contrast WARNs now come with a fifth: the gate counts the canvas as a picture behind 70 text elements, so it lists them for checking by eye instead of measuring them (the contrast note above covers them). Slices looked at: 375px-01, 1440px-01 and 1440px-04. A full-page capture draws a fixed layer once at the top, so lower slices show no dots.
 - [ ] Needs from Gene: a tap on a real iPhone. The touch test ran in Chrome, not iOS Safari. Tap empty space and text in the hero: a cyan ring should spread. Tapping a button should only follow the link.
 - [ ] Owner's call: the resting grid is faint at 5%. Stronger, like the reference site, takes the dim labels below AA over a dot. `REST_ALPHA` in `script.js` sets it, and 0 hides the grid until a ripple passes.
-- [ ] Owner's call: not committed or pushed. A push to `main` is the deploy.
+- [x] ~~Owner's call: not committed or pushed. A push to `main` is the deploy.~~ Resolved 2026-10-27: deployed as `fab9097` at the owner's go-ahead (see 2026-10-27).
 
 ## 2026-10-15 · Touch and motion fixes
 
