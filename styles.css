@@ -60,6 +60,13 @@ button { -webkit-user-select: none; user-select: none; }
 
 img { max-width: 100%; display: block; }
 
+/* No paragraph ends on one lone word, and a heading that wraps splits into even lines.
+   Browsers without text-wrap support ignore both. */
+p, dd, li { text-wrap: pretty; }
+h2, h3 { text-wrap: balance; }
+/* The mono label lines keep plain wrapping: "pretty" broke "On-Call" at its hyphen at 360px. */
+.case__meta, .project__meta { text-wrap: wrap; }
+
 /* ============ TYPOGRAPHY HELPERS ============ */
 .eyebrow {
   font-family: var(--font-mono);
@@ -855,7 +862,7 @@ body.menu-open { overflow: hidden; }
 .project__body { padding: 1.25rem; }
 .project__meta {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
@@ -878,7 +885,7 @@ body.menu-open { overflow: hidden; }
 }
 .tag {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
@@ -939,7 +946,7 @@ body.menu-open { overflow: hidden; }
 .case__media-label {
   position: relative;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--text-dim);
@@ -983,7 +990,7 @@ body.menu-open { overflow: hidden; }
 .case__body { padding: clamp(1.25rem, 3vw, 2rem); }
 .case__meta {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
@@ -997,8 +1004,8 @@ body.menu-open { overflow: hidden; }
 }
 .case__client {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
   color: var(--text-dim);
   margin: 0;
 }
@@ -1009,7 +1016,7 @@ body.menu-open { overflow: hidden; }
 }
 .case__points dt {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text);
