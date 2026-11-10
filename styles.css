@@ -910,7 +910,7 @@ body.menu-open { overflow: hidden; }
   overflow: hidden;
   transition: border-color .2s ease, box-shadow .2s ease, var(--reveal-transition);
 }
-/* Border only, no lift: a case card is not a link (only Case 01's video panel is). */
+/* Border only, no lift: a case card is not a link (Case 01's video panel is, while it has a video). */
 @media (hover: hover) and (pointer: fine) {
   .case:hover {
     border-color: var(--accent);
@@ -961,6 +961,8 @@ body.menu-open { overflow: hidden; }
   color: var(--accent);
   text-shadow: 0 0 24px var(--accent-glow);
 }
+/* The play button and video panel styles below are unused while Case 01 has no video (taken
+   down 2026-11-10). They stay so the new walkthrough only needs its markup back. */
 .case__play {
   align-self: center;
   display: inline-flex;

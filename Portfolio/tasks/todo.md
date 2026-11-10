@@ -2,6 +2,14 @@
 
 ~~Single-page static portfolio showcasing five disciplines: Product Manager, UI/UX Developer, Software Engineer, Security Engineer, Growth Marketer. Local-only (file:// or VS Code Live Server). No build step, no framework.~~ Corrected 2026-10-12: the disciplines were replaced by CV-backed ones in v3, and the site is now public on GitHub Pages (built from `main`). Still a single page, no build step, no framework. `CLAUDE.md` at the repo root describes the current setup.
 
+## 2026-11-10 · Case 01 video taken down
+
+- [x] Owner's request: "The video and audio quality of that is very low. Let's remove it for now until i get a new video ready." The video lived on Google Drive and only `index.html` linked to it (checked with `git grep` for the file id and "walkthrough").
+- [x] `index.html`: Case 01's media panel is no longer a link to the Drive video. It is built like Cases 02 to 04: a plain `aria-hidden` panel with the top label "CRM · PIPELINE REBUILD", the mark "CRM" and the bottom label "MISSED CALL STAGE" in place of "WATCH · 3 MIN". "What I did" lost its last sentence, which pointed at the walkthrough; the rest of the case copy is unchanged. A `TODO(Gene)` comment marks where the new video goes. `styles.css` keeps the play button and video panel rules, with a comment saying they are unused for now, so the new video needs only its markup back.
+- [x] Gate on `X:\Master\index.html` at 320, 360, 375, 768, 1024 and 1440px: WARN, no FAIL, 0 console errors. 11 copy WARNs: the 10 known ones plus the new `TODO(Gene)` marker. Slices looked at: 1440px-03 and 375px-05 (Case 01 with the CRM mark, no play button).
+- [ ] Owner's call: the Drive file itself is still shared as before. Anyone who saved the old link can still open it until its sharing is changed in Google Drive.
+- [ ] Needs from Gene: the new walkthrough video and its link.
+
 ## 2026-11-10 · Small labels and line wraps fixed
 
 - [x] Found by the Impeccable design detector (`npx impeccable@4.8.2 detect`, run against the page served by the `portfolio` launch config, telemetry off, nothing installed into the repo). First run: 66 findings. 56 were legibility, which the gate does not measure: 42 labels and tags under 11px (`.tag` 0.65rem = 10.4px; `.case__meta`, `.case__points dt`, `.project__meta` 0.68rem = 10.88px), 3 client lines at 11.52px with 0.08em tracking, 6 paragraphs ending on one word and 1 unevenly wrapped title. The browser's computed sizes matched the detector exactly. A plain test page scanned clean (exit 0), so the detector does not flag everything.
@@ -10,7 +18,7 @@
 - [x] Gate on `X:\Master\index.html` at 320, 360, 375, 768, 1024 and 1440px: WARN, no FAIL, 0 console errors; the same 10 copy WARNs (four spaced hyphens in the title and meta tags, six `TODO(Gene)` markers). Final detector run: 11 findings, the same as the second run. Slices looked at: 375px-06 and 375px-09 (both wrap problems gone), 1440px-03, 1440px-04 and 1440px-05.
 - [ ] Owner's call: the 10 remaining "AI slop" tells are part of the site's look, not defects: the `// PORTFOLIO` line above the hero, the small label above every section heading (5), the cyan glow on the case marks (3) and the background stripes. Keep them, or take them up in a redesign.
 - [ ] Owner's call: one remaining detector warning, `all-caps-body`. The first job's meta line is 101 uppercase characters. Shorten it, or drop the uppercase on long meta lines.
-- [ ] Owner's call: not committed or pushed. A push to `main` is the deploy.
+- [x] ~~Owner's call: not committed or pushed. A push to `main` is the deploy.~~ Resolved 2026-11-10: deployed at the owner's "Yes, deploy it" as `67c91d7`. Pages build `built` for `67c91d7` (equal to `git rev-parse HEAD`) in 93 s, live page 200, and the live `index.html`, `styles.css` and this journal match the commit (SHA256).
 
 ## 2026-10-27 · Ripple and root CLAUDE.md deployed
 
@@ -127,7 +135,7 @@ Added for the Aspire Media Marketing (Media Manager) application, which asked fo
 - [x] Renumbered sections to `0X / 05`, and added Case Studies to the quick-nav (5 cards: 3 + 2 rows under 1080px, 2 + 2 + 1 under 720px, one column under 440px) and to the menu drawer (now 01 to 06). The menu tracker and scroll reveal both cover the new section.
 - [x] Checked in headless Chrome at 1440, 1000, 700 and 375px: no console errors, no quick-nav label overflow, and the nav counter and menu both mark Case Studies while it is in view. ~~The 375px `scrollWidth` of 423 comes from the off-canvas menu and is the same on the previous commit.~~ Corrected 2026-10-12: the overflow was the hero headline, which was cut off at every phone width. With the headline fixed, `scrollWidth` at 375px is 375. See the 2026-10-12 hero entry. 0 em dashes and 0 en dashes.
 - [ ] Needs from Gene, marked by `TODO(Gene)` comments in `index.html`: blurred screenshots for cases 02 and 03 (drop in `assets/` and add an `<img>` inside `.case__media`), before/after numbers for the 78 Missed Call opportunities, campaign stats, and which client names may be shown.
-- [ ] Confirm the Drive video is shared as "Anyone with the link".
+- [x] ~~Confirm the Drive video is shared as "Anyone with the link".~~ Superseded 2026-11-10: the video was taken off the page at the owner's request (see 2026-11-10 · Case 01 video taken down).
 - [ ] Merge to `main` so GitHub Pages publishes it.
 
 ## 2026-09-19 · Site copy and CV alignment
